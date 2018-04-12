@@ -26,9 +26,6 @@ npm run dev
 ## Generating the Static Site
 
 ```
-# Run the next.js build process
-npm run build
-
-# Export the site, the static files are generated in the folder out/
+# Build and export the site, the static files are generated in the out/ folder
 npm run export
 ```
