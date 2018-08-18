@@ -63,7 +63,7 @@ class Main extends React.Component {
 							</div>
 							<div className="field">
 								<label htmlFor="message">Message</label>
-								<textarea name="message" id="message" rows="4"></textarea>
+								<textarea name="message" id="message" rows="4"/>
 							</div>
 							<ul className="actions">
 								<li><input type="submit" value="Send Message" className="special"/></li>
@@ -71,20 +71,22 @@ class Main extends React.Component {
 							</ul>
 						</form>
 						<ul className="icons">
-							<li><a href="#">
+							<li><a href="https://twitter.com/radiumrasheed">
 								<FontAwesomeIcon icon={faTwitter}/>
 							</a></li>
-							<li><a href="#">
-								<FontAwesomeIcon icon={faFacebook}/>
-							</a></li>
-							<li><a href="#">
+							<li><a href="https://instagram.com/radiumrasheed">
 								<FontAwesomeIcon icon={faInstagram}/>
 							</a></li>
-							<li><a href="#">
+							<li><a href="https://github.com/ra1da35ma">
 								<FontAwesomeIcon icon={faGithub}/>
 							</a></li>
 						</ul>
 						{close}
+					</article>
+
+					<article id="interest" className={`${this.props.article === 'contact' ? 'active' : ''} ${this.props.articleTimeout ? 'timeout' : ''}`}
+					         style={{display: 'none'}}>
+
 					</article>
 
 				</div>
