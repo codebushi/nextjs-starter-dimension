@@ -35,5 +35,7 @@
 	},
 	"devDependencies": {
 		"serverless-google-cloudfunctions": "^1.2.0"
+	},
+	"now": {
 	}
 }
