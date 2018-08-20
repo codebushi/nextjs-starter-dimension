@@ -1,5 +1,5 @@
 {
-	"name": "nextjs-starter",
+	"name": "portfolio",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -7,10 +7,12 @@
 		"dev": "next",
 		"build": "next build",
 		"start": "next start",
-		"export": "next build && next export"
+		"export": "next build && next export",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"serverless": "serverless deploy"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Rasheed Rahman <radiumasheed@gmail.com>",
 	"license": "ISC",
 	"dependencies": {
 		"@fortawesome/fontawesome": "^1.1.5",
@@ -30,5 +32,10 @@
 		"react-dom": "^16.0.0",
 		"sass-loader": "^6.0.6",
 		"prop-types": "latest"
+	},
+	"devDependencies": {
+		"serverless-google-cloudfunctions": "^1.2.0"
+	},
+	"now": {
 	}
 }
