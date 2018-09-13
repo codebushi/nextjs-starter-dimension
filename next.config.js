@@ -32,9 +32,9 @@ module.exports = {
     )
     return config
   },
-  exportPathMap: function(defaultPathMap) {
-    return {
-      '/': { page: '/' }
-    }
-  }
+  // exportPathMap: function(defaultPathMap) {
+  //   return {
+  //     '/': { page: '/' }
+  //   }
+  // }
 }
