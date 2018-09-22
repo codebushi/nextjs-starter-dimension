@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-starter",
+  "name": "nextjs-dimension",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -24,10 +24,10 @@
     "postcss-easy-import": "^3.0.0",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^0.5.1",
-    "next": "^6.1.2",
+    "next": "^7.0.0",
     "node-sass": "^4.9.3",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "sass-loader": "^7.1.0"
   }
 }
