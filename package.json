@@ -13,10 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.5",
-    "@fortawesome/fontawesome-free-brands": "^5.0.10",
-    "@fortawesome/fontawesome-free-regular": "^5.0.10",
-    "@fortawesome/react-fontawesome": "0.0.18",
+    "react-icons": "^3.11.0",
     "autoprefixer": "^9.1.5",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-wrap-in-js": "^1.1.1",
