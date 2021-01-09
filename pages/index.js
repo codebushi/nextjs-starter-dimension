@@ -1,6 +1,6 @@
 import Head from "next/head"
 import stylesheet from 'styles/main.scss'
-import "../static/css/avatar.css";
+// import "../static/css/avatar.css";
 
 import Header from "../components/Header"
 import Main from "../components/Main"
