@@ -4,15 +4,15 @@ import { FaCode } from "react-icons/fa";
 
 const Header = (props) => (
     <header id="header" style={props.timeout ? { display: 'none' } : {}}>
-        <div className="logo">
+        <div id="" onClick={()=>props.isDrawing()} className="logo glowButton">
             {/*<span className="icon fa-diamond"></span>*/}
-            <FaCode style={{ fontSize: 'xx-large' }} />
+            <FaCode id="codeButton" style={props.draw? {transform: 'rotate(190deg)'}:{}} />
         </div>
         <div className="content">
             <div className="inner">
-                <h1>Dimension</h1>
-                <p>A fully responsive site template designed by <a href="https://html5up.net">HTML5 UP</a> and released<br />
-                for free under the <a href="https://html5up.net/license">Creative Commons</a> license.</p>
+                <h1>{props.draw?"Some People":"Abe"}</h1>
+                <p>"Some People <a href="https://www.freecodecamp.org/news/how-i-changed-careers-and-landed-a-job-as-a-developer-in-six-months-d5cc5f7c19f6/">Land A job as a developer in 6 months</a> and released<br />
+                for free under the <a href="https://html5up.net/license">Creative Commons</a> license."</p>
             </div>
         </div>
         <nav>
