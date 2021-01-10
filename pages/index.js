@@ -41,6 +41,7 @@ class IndexPage extends React.Component {
   }
 
   handleOpenArticle(article) {
+    if(this.state.isDrawing){this.draw()}
     this.setState({
       isArticleVisible: !this.state.isArticleVisible,
       article,
@@ -60,6 +61,7 @@ class IndexPage extends React.Component {
   }
 
   handleCloseArticle() {
+    this.draw()
     this.setState({
       articleTimeout: !this.state.articleTimeout,
     });

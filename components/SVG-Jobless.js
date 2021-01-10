@@ -6,7 +6,7 @@ function Icon(props) {
     console.log(props.isDrawing, "props isDrawing")
     const timer = setTimeout(() => {
       props.draw()
-    }, 1000);
+    }, 0);
     return () => clearTimeout(timer);
   },[]);
   return (

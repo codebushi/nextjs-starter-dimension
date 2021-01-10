@@ -13,7 +13,7 @@ const Header = (props) => (
     <header id="header" style={props.timeout ? { display: 'none' } : {}}>
         <div id="" onClick={()=>props.isDrawing()} className="logo glowButton">
             {/*<span className="icon fa-diamond"></span>*/}
-            <FaCode id="codeButton" style={props.draw? {transform: 'rotate(190deg)'}:{}} />
+            <FaCode id="codeButton" style={props.draw? {transform: 'rotateX(3.142rad)'}:{}} />
         </div>
         <div className="content">
             <div className="inner">
