@@ -108,4 +108,8 @@
 				@include padding(2rem, 1.5rem, (1rem, 0, 0.5rem, 0));
 			}
 		}
+
+		ul.a {
+			list-style-type: square;
+		  }
 	}

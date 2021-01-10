@@ -117,7 +117,10 @@ $spotThree: #352155;
 
 
 
-
+   h1{
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+   }
 
   .logo {
     width: 4rem;
