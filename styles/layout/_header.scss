@@ -102,14 +102,26 @@ $spotThree: #352155;
       display: none;
     }
   }
-  .text-wrap span {
-    height: 80px; 
-     position: absolute;
-     transform-origin: bottom center;
+  
+
+
+   .text-wrap span {
+    font-size: large;
+    font-weight: 400;
+    height: 88px;
+    position: absolute;
+    transform-origin: bottom center;
+    bottom: 29px;
+    left: 27px;
    }
+
+
+
+
+
   .logo {
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 4rem;
+    height: 4rem;
     line-height: 5.5rem;
     border: solid _size(border-width) _palette(border);
     border-radius: 100%;
@@ -251,6 +263,16 @@ $spotThree: #352155;
   }
 
   @include breakpoint(small) {
+
+    .text-wrap span {
+      font-size: large;
+      font-weight: 400;
+      height: 88px;
+      position: absolute;
+      transform-origin: bottom center;
+      bottom: 29px;
+      left: 27px;
+     }
     > * {
       margin-top: 2rem;
 
@@ -261,8 +283,8 @@ $spotThree: #352155;
     }
 
     .logo {
-      width: 4.75rem;
-      height: 4.75rem;
+      width: 4rem;
+      height: 4rem;
       // line-height: 4.75rem;
 
       .icon {

@@ -1,7 +1,7 @@
-@import 'libs/vars';
-@import 'libs/functions';
-@import 'libs/mixins';
-@import 'libs/skel';
+@import "libs/vars";
+@import "libs/functions";
+@import "libs/mixins";
+@import "libs/skel";
 
 /*
 	Dimension by HTML5 UP
@@ -9,41 +9,84 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-	@include skel-breakpoints((
-		xlarge:		'(max-width: 1680px)',
-		large:		'(max-width: 1280px)',
-		medium:		'(max-width: 980px)',
-		small:		'(max-width: 736px)',
-		xsmall:		'(max-width: 480px)',
-		xxsmall:	'(max-width: 360px)'
-	));
+@include skel-breakpoints(
+  (
+    xlarge: "(max-width: 1680px)",
+    large: "(max-width: 1280px)",
+    medium: "(max-width: 980px)",
+    small: "(max-width: 736px)",
+    xsmall: "(max-width: 480px)",
+    xxsmall: "(max-width: 360px)",
+  )
+);
 
-	@include skel-layout((
-		reset: 'full',
-		boxModel: 'border'
-	));
+@include skel-layout(
+  (
+    reset: "full",
+    boxModel: "border",
+  )
+);
 
 // Base.
 
-	@import 'base/page';
-	@import 'base/typography';
+@import "base/page";
+@import "base/typography";
 
 // Component.
 
-	@import 'components/form';
-	@import 'components/box';
-	@import 'components/icon';
-	@import 'components/image';
-	@import 'components/list';
-	@import 'components/table';
-	@import 'components/button';
-	@import "components/avatar";
-
+@import "components/form";
+@import "components/box";
+@import "components/icon";
+@import "components/image";
+@import "components/list";
+@import "components/table";
+@import "components/button";
+@import "components/avatar";
 
 // Layout.
 
-	@import 'layout/bg';
-	@import 'layout/wrapper';
-	@import 'layout/header';
-	@import 'layout/main';
-	@import 'layout/footer';
+@import "layout/bg";
+@import "layout/wrapper";
+@import "layout/header";
+@import "layout/main";
+@import "layout/footer";
+
+div#profile-image {
+  background-image: url(../static/images/profile_100.png);
+  background-color: rgba(192, 192, 192, 0.274);
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  left: 7px;
+  top: 5px;
+  border-radius: 100%;
+  border-style: solid;
+  border-color: #3e5271d6;
+  border-width: medium;
+  background-size: 65px;
+  background-repeat: no-repeat;
+}
+
+.layer {
+	background-color: rgba(30, 38, 146, 0.137);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+@media only screen and (max-width: 500px) {
+	div#profile-image {
+	  display: none;
+	}
+  }
+
+
+  div#profile-image {
+    -webkit-transition: all .75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: all .75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -ms-transition: all .75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: all .75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all .75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}

@@ -97,7 +97,11 @@ class IndexPage extends React.Component {
 
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
           <div id="wrapper">
-            <Icon draw={this.draw} isDrawing={this.state.isDrawing}/>
+            <div id="profile-image" style={(this.state.loading==='is-loading')||!this.state.isDrawing?{'opacity':0, 'height':'0px', 'width':'0px'}:{'opacity':1, 'height':'65px'}}>
+              <div class="layer"></div>
+            </div>
+
+            <Icon draw={this.draw} isDrawing={this.state.isDrawing} />
 
             <Header
               draw={this.state.isDrawing}
