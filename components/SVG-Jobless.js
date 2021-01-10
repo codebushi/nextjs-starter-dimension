@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 
-function Icon(props) {
+function Icon({isDrawing, draw}) {
   useEffect(() => {
     console.log('i run once')
-    console.log(props.isDrawing, "props isDrawing")
+    console.log(isDrawing, "props isDrawing")
     const timer = setTimeout(() => {
-      props.draw()
+      draw()
     }, 100);
     return () => clearTimeout(timer);
   },[]);
   return (
     <div id="svg-container">
       <svg
-      className={props.isDrawing?'active':''}
+      className={isDrawing?'active':''}
         id="Icon"
         width="100%"
         height="100%"
