@@ -16,7 +16,7 @@ class IndexPage extends React.Component {
       articleTimeout: false,
       article: "",
       loading: "is-loading",
-      isDrawing: true,
+      isDrawing: false,
     };
     this.handleOpenArticle = this.handleOpenArticle.bind(this);
     this.handleCloseArticle = this.handleCloseArticle.bind(this);
@@ -95,7 +95,7 @@ class IndexPage extends React.Component {
 
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
           <div id="wrapper">
-            <Icon />
+            <Icon draw={this.draw} isDrawing={this.state.isDrawing}/>
 
             <Header
               draw={this.state.isDrawing}
