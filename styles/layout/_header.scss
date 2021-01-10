@@ -102,13 +102,18 @@ $spotThree: #352155;
       display: none;
     }
   }
-
+  .text-wrap span {
+    height: 80px; 
+     position: absolute;
+     transform-origin: bottom center;
+   }
   .logo {
     width: 5.5rem;
     height: 5.5rem;
     line-height: 5.5rem;
     border: solid _size(border-width) _palette(border);
     border-radius: 100%;
+
 
     .icon {
       &:before {
@@ -258,7 +263,7 @@ $spotThree: #352155;
     .logo {
       width: 4.75rem;
       height: 4.75rem;
-      line-height: 4.75rem;
+      // line-height: 4.75rem;
 
       .icon {
         &:before {
@@ -318,3 +323,4 @@ $spotThree: #352155;
     }
   }
 }
+

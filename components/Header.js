@@ -10,10 +10,23 @@ const Abe={
     'p':'has been studying for over two years and has never been interviewed'
 }
 const Header = (props) => (
+
     <header id="header" style={props.timeout ? { display: 'none' } : {}}>
+ 
+ 
         <div id="" onClick={()=>props.isDrawing()} className="logo glowButton">
             {/*<span className="icon fa-diamond"></span>*/}
+            <div>
+            <div class="text-wrap">
+            <span style={{transform:'rotate(-60deg)'}}>P</span>            
+            <span style={{transform:'rotate(-30deg)'}}>U</span>
+            <span style={{transform:'rotate(30deg)'}}>S</span>
+            <span style={{transform:'rotate(60deg)'}}>H</span>       
+            </div>
+
             <FaCode id="codeButton" style={props.draw? {transform: 'rotateX(3.142rad)'}:{}} />
+            </div>
+ 
         </div>
         <div className="content">
             <div className="inner">
