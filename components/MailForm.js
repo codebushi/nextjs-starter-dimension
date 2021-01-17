@@ -1,22 +1,23 @@
 // import { useState, useEffect, useRef } from "react";
-const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+const InitialData = {
+  values: {
+    name: "",
+    email: "",
+    message: "",
+  },
+  fieldErrors: {
+    name: "",
+    email: "",
+    message: "",
+  },
+};
 class MailForm extends React.Component {
-  static initial={
-    values: {
-      name: "",
-      email: "",
-      message: "",
-    },
-    fieldErrors: {
-      name: "",
-      email: "",
-      message: "",
-    },
-  };
   constructor(props) {
     super(props);
-    this.state = MailForm.initial
+    this.state = InitialData;
   }
   componentDidMount() {
     this.name.focus();
@@ -37,9 +38,9 @@ class MailForm extends React.Component {
         fieldErrors.name = value.length < 5 ? "name must be 5 chars long!" : "";
         break;
       case "email":
-        fieldErrors.email =
-        !validEmailRegex.test(value)
-        ? "email is not valid!" : "";
+        fieldErrors.email = !validEmailRegex.test(value)
+          ? "email is not valid!"
+          : "";
         break;
       case "message":
         fieldErrors.message =
@@ -55,6 +56,9 @@ class MailForm extends React.Component {
         [name]: value,
       },
     }));
+  };
+  reset = () => {
+    this.setState(InitialData);
   };
   render() {
     const { name, email, message } = this.state.values;
@@ -77,7 +81,9 @@ class MailForm extends React.Component {
             id="name"
             required
           />
-          <div style={{fontSize:'70%'}} className="error">{fieldErrors.name.length>0?fieldErrors.name:'Your full name'}</div>
+          <div style={{ fontSize: "70%" }} className="error">
+            {fieldErrors.name.length > 0 ? fieldErrors.name : "Your full name"}
+          </div>
         </div>
         <div className="field half">
           <label htmlFor="email">Email</label>
@@ -90,7 +96,11 @@ class MailForm extends React.Component {
             id="email"
             required
           />
-          <div style={{fontSize:'70%'}} className="error">{fieldErrors.email.length>0?fieldErrors.email:'enter a valid email'}</div>
+          <div style={{ fontSize: "70%" }} className="error">
+            {fieldErrors.email.length > 0
+              ? fieldErrors.email
+              : "enter a valid email"}
+          </div>
         </div>
         <div className="field">
           <label htmlFor="message">Message</label>
@@ -103,7 +113,11 @@ class MailForm extends React.Component {
             rows="4"
             required
           ></textarea>
-          <div style={{fontSize:'70%'}} className="error">{fieldErrors.message.length>0?fieldErrors.message:'describe your project'}</div>
+          <div style={{ fontSize: "70%" }} className="error">
+            {fieldErrors.message.length > 0
+              ? fieldErrors.message
+              : "describe your project"}
+          </div>
         </div>
         <ul className="actions">
           <li>
@@ -115,7 +129,7 @@ class MailForm extends React.Component {
             />
           </li>
           <li>
-            <input onClick={()=>this.setState(MailForm.initial)} type="reset" value="Reset" />
+            <input onClick={this.reset} type="reset" value="Reset" />
           </li>
         </ul>
       </form>
