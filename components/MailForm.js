@@ -13,6 +13,7 @@ const InitialData = {
     email: "",
     message: "",
   },
+  FormIsOpen:false,
 };
 class MailForm extends React.Component {
   constructor(props) {
@@ -58,17 +59,17 @@ class MailForm extends React.Component {
     this.setState(InitialData);
   };
 
-  // focusTextInput=()=> {
-  //   // Explicitly focus the text input using the raw DOM API
-  //   // Note: we're accessing "current" to get the DOM node
-  //   console.log('focus input')
-  //   this.textInput.current.focus();
-  // }
-  render() {
-    if(this.props.FormIsOpen){
-      console.log('focus the input ref')
+ 
+  componentDidUpdate(prevProps, state) {
+       if(this.props.FormIsOpen){
       this.textInput.current.focus();
     }
+  }
+  render() {
+    // if(this.props.FormIsOpen){
+    //   console.log('focus the input ref')
+    //   this.textInput.current.focus();
+    // }
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
