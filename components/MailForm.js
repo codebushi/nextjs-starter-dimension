@@ -1,18 +1,28 @@
 // import { useState, useEffect, useRef } from "react";
+const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
 class MailForm extends React.Component {
+  static initial={
+    values: {
+      name: "",
+      email: "",
+      message: "",
+    },
+    fieldErrors: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  };
   constructor(props) {
     super(props);
-    this.state = {
-      values: {
-        name: "",
-        email: "",
-        message: "",
-      },
-    };
+    this.state = MailForm.initial
   }
   componentDidMount() {
     this.name.focus();
+    console.log("mounted form");
   }
+
   handleBlur = (e) => {
     console.log(e.target);
     console.log("was blurred");
@@ -21,18 +31,20 @@ class MailForm extends React.Component {
   handleChange = (e) => {
     e.preventDefault;
     const { name, value } = e.target;
-    // const val = e.target.value;
-    // let values = this.state.values
-    // console.log(val);
+    let { fieldErrors } = this.state;
     switch (name) {
       case "name":
-        console.log("name", name);
+        fieldErrors.name = value.length < 5 ? "name must be 5 chars long!" : "";
         break;
       case "email":
-        console.log("name", name);
+        fieldErrors.email =
+        !validEmailRegex.test(value)
+        ? "email is not valid!" : "";
         break;
       case "message":
-        console.log("name", name);
+        fieldErrors.message =
+          value.length < 10 ? "project description must be 10 chars long!" : "";
+
         break;
       default:
         break;
@@ -46,15 +58,15 @@ class MailForm extends React.Component {
   };
   render() {
     const { name, email, message } = this.state.values;
+    const { fieldErrors } = this.state;
     return (
-      <form method="post" action="#">
+      <form noValidate method="post" action="#">
         <div className="field half first">
-          <div id="name-error"></div>
           <label htmlFor="name">Name</label>
           <input
             ref={(input) => {
               this.name = input;
-              console.log(input, "the name")
+              console.log(input, "the name");
             }}
             // autoFocus
             onBlur={this.handleBlur}
@@ -65,6 +77,7 @@ class MailForm extends React.Component {
             id="name"
             required
           />
+          <div style={{fontSize:'70%'}} className="error">{fieldErrors.name.length>0?fieldErrors.name:'Your full name'}</div>
         </div>
         <div className="field half">
           <label htmlFor="email">Email</label>
@@ -77,6 +90,7 @@ class MailForm extends React.Component {
             id="email"
             required
           />
+          <div style={{fontSize:'70%'}} className="error">{fieldErrors.email.length>0?fieldErrors.email:'enter a valid email'}</div>
         </div>
         <div className="field">
           <label htmlFor="message">Message</label>
@@ -89,6 +103,7 @@ class MailForm extends React.Component {
             rows="4"
             required
           ></textarea>
+          <div style={{fontSize:'70%'}} className="error">{fieldErrors.message.length>0?fieldErrors.message:'describe your project'}</div>
         </div>
         <ul className="actions">
           <li>
@@ -100,7 +115,7 @@ class MailForm extends React.Component {
             />
           </li>
           <li>
-            <input type="reset" value="Reset" />
+            <input onClick={()=>this.setState(MailForm.initial)} type="reset" value="Reset" />
           </li>
         </ul>
       </form>
