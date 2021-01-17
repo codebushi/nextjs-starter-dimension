@@ -18,10 +18,7 @@ class MailForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = InitialData;
-  }
-  componentDidMount() {
-    this.name.focus();
-    console.log("mounted form");
+    this.textInput = React.createRef();
   }
 
   handleBlur = (e) => {
@@ -60,18 +57,28 @@ class MailForm extends React.Component {
   reset = () => {
     this.setState(InitialData);
   };
+
+  // focusTextInput=()=> {
+  //   // Explicitly focus the text input using the raw DOM API
+  //   // Note: we're accessing "current" to get the DOM node
+  //   console.log('focus input')
+  //   this.textInput.current.focus();
+  // }
   render() {
+    if(this.props.FormIsOpen){
+      console.log('focus the input ref')
+      this.textInput.current.focus();
+    }
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
-      <form noValidate method="post" action="#">
+      <form           
+      // onClick={this.focusTextInput}
+      noValidate method="post" action="#">
         <div className="field half first">
           <label htmlFor="name">Name</label>
           <input
-            ref={(input) => {
-              this.name = input;
-              console.log(input, "the name");
-            }}
+            ref={this.textInput}
             // autoFocus
             onBlur={this.handleBlur}
             value={name}

@@ -180,7 +180,7 @@ class Main extends React.Component {
           style={{ display: "none" }}
         >
           <h2 className="major">Contact</h2>
-          <MailForm />
+          <MailForm FormIsOpen={this.props.FormIsOpen}/>
           <ul className="icons">
             <li>
               <a href="#">{/* <FontAwesomeIcon icon={faTwitter} /> */}</a>

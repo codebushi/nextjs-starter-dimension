@@ -19,6 +19,7 @@ class IndexPage extends React.Component {
       article: "",
       loading: "is-loading",
       isDrawing: false,
+      FormIsOpen: false,
     };
     this.handleOpenArticle = this.handleOpenArticle.bind(this);
     this.handleCloseArticle = this.handleCloseArticle.bind(this);
@@ -43,6 +44,10 @@ class IndexPage extends React.Component {
   }
 
   handleOpenArticle(article) {
+    console.log(article, 'the article')
+    if(article==='contact'){
+      this.setState({FormIsOpen:true})
+    }
     if(this.state.isDrawing){this.draw()}
     this.setState({
       isArticleVisible: !this.state.isArticleVisible,
@@ -194,6 +199,7 @@ class IndexPage extends React.Component {
               articleTimeout={this.state.articleTimeout}
               article={this.state.article}
               onCloseArticle={this.handleCloseArticle}
+              FormIsOpen={this.state.FormIsOpen}
             />
             <Footer timeout={this.state.timeout} />
           </div>
