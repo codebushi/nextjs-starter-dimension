@@ -66,7 +66,8 @@
 		color: _palette(fg-bold);
 		display: block;
 		font-size: 0.8rem;
-		font-weight: _font(weight);
+		// font-weight: _font(weight);
+		font-weight: bold;
 		letter-spacing: _font(letter-spacing);
 		line-height: 1.5;
 		margin: 0 0 (_size(element-margin) * 0.5) 0;
@@ -94,6 +95,8 @@
 		padding: 0 1rem;
 		text-decoration: none;
 		width: 100%;
+		-webkit-transition: 0.5;
+		transition: 0.5s;
 
 		&:invalid {
 			box-shadow: none;
@@ -103,6 +106,7 @@
 			background: _palette(border-bg);
 			border-color: _palette(fg-bold);
 			box-shadow: 0 0 0 _size(border-width) _palette(fg-bold);
+			border: 3px solid
 		}
 	}
 

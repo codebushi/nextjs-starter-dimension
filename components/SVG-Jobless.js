@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 
 function Icon({isDrawing, draw}) {
   useEffect(() => {
-    console.log('i run once')
-    console.log(isDrawing, "props isDrawing")
     const timer = setTimeout(() => {
       draw()
     }, 100);

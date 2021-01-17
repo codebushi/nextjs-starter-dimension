@@ -44,7 +44,6 @@ class IndexPage extends React.Component {
   }
 
   handleOpenArticle(article) {
-    console.log(article, 'the article')
     if(article==='contact'){
       this.setState({FormIsOpen:true})
     }

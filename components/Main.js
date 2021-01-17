@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 // import faFacebook from '@fortawesome/fontawesome-free-brands/faFacebook'
 // import faInstagram from '@fortawesome/fontawesome-free-brands/faInstagram'
 // import faGithub from '@fortawesome/fontawesome-free-brands/faGithub'
+import {FiGithub, FiLink, FiFacebook} from "react-icons/fi"
+
 import MailForm from "./MailForm";
 class Main extends React.Component {
   render() {
@@ -183,16 +185,13 @@ class Main extends React.Component {
           <MailForm FormIsOpen={this.props.FormIsOpen}/>
           <ul className="icons">
             <li>
-              <a href="#">{/* <FontAwesomeIcon icon={faTwitter} /> */}</a>
+              <a href="#" className="social"> <FiFacebook /></a>
             </li>
             <li>
-              <a href="#">{/* <FontAwesomeIcon icon={faFacebook} /> */}</a>
+              <a href="#" className="social"> <FiLink/></a>
             </li>
             <li>
-              <a href="#">{/* <FontAwesomeIcon icon={faInstagram} /> */}</a>
-            </li>
-            <li>
-              <a href="#">{/* <FontAwesomeIcon icon={faGithub} /> */}</a>
+              <a href="#" className="social"><FiGithub /></a>
             </li>
           </ul>
           {close}

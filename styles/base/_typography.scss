@@ -36,7 +36,6 @@
 			'background-color #{_duration(transition)} ease-in-out',
 			'border-bottom-color #{_duration(transition)} ease-in-out'
 		));
-		border-bottom: dotted 1px _palette(fg-light);
 		text-decoration: none;
 		color: inherit;
 
@@ -44,6 +43,16 @@
 			border-bottom-color: transparent;
 		}
 	}
+	a:not(.social) {
+		border-bottom: dotted 1px _palette(fg-light);
+	}
+	.social{
+		font-size: large;
+	}
+	.error-msg{
+		font-size: 80%
+	}
+
 
 	strong, b {
 		color: _palette(fg-bold);

@@ -1,7 +1,16 @@
-// import { useState, useEffect, useRef } from "react";
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
+
+const errorStyle = {
+  color: "orangered",
+};
+const errorBorder = {
+  border: "solid orangered",
+};
+const nameLength = 5;
+const msgLength = 20;
+
 const InitialData = {
   values: {
     name: "",
@@ -13,7 +22,7 @@ const InitialData = {
     email: "",
     message: "",
   },
-  FormIsOpen:false,
+  FormIsOpen: false,
 };
 class MailForm extends React.Component {
   constructor(props) {
@@ -21,6 +30,26 @@ class MailForm extends React.Component {
     this.state = InitialData;
     this.textInput = React.createRef();
   }
+  handleSubmission = (e) => {
+    e.preventDefault();
+    console.log("send to server");
+    
+  };
+
+  checkIsValid = () => {
+    console.log("check validity");
+    let { name, email, message } = this.state.values;
+    if (name.length === 0 || email.length === 0 || message.length == 0) {
+      return false;
+    }
+    {
+      let { name, email, message } = this.state.fieldErrors;
+      if (name.length > 0 || email.length > 0 || message.length > 0) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   handleBlur = (e) => {
     console.log(e.target);
@@ -28,12 +57,15 @@ class MailForm extends React.Component {
   };
 
   handleChange = (e) => {
-    e.preventDefault;
+    e.preventDefault();
     const { name, value } = e.target;
     let { fieldErrors } = this.state;
     switch (name) {
       case "name":
-        fieldErrors.name = value.length < 5 ? "name must be 5 chars long!" : "";
+        fieldErrors.name =
+          value.length < nameLength
+            ? `name must be ${nameLength} chars long!`
+            : "";
         break;
       case "email":
         fieldErrors.email = !validEmailRegex.test(value)
@@ -42,7 +74,9 @@ class MailForm extends React.Component {
         break;
       case "message":
         fieldErrors.message =
-          value.length < 10 ? "project description must be 10 chars long!" : "";
+          value.length < msgLength
+            ? `project description must be ${msgLength} chars long!`
+            : "";
 
         break;
       default:
@@ -58,13 +92,14 @@ class MailForm extends React.Component {
   reset = () => {
     this.setState(InitialData);
   };
-
- 
-  componentDidUpdate(prevProps, state) {
-       if(this.props.FormIsOpen){
-      this.textInput.current.focus();
-    }
-  }
+  handleInvalid=(e)=>{
+    e.preventDefault()
+    alert('the form is invalid, please try again to fill out the form, all fields must be valid')}
+  // componentDidUpdate(prevProps, state) {
+  //      if(this.props.FormIsOpen){
+  //     this.textInput.current.focus();
+  //   }
+  // }
   render() {
     // if(this.props.FormIsOpen){
     //   console.log('focus the input ref')
@@ -73,11 +108,19 @@ class MailForm extends React.Component {
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
-      <form           
-      // onClick={this.focusTextInput}
-      noValidate method="post" action="#">
+      <form
+        // onClick={this.focusTextInput}
+        noValidate
+        method="post"
+        action="#"
+      >
         <div className="field half first">
-          <label htmlFor="name">Name</label>
+          <label
+            style={fieldErrors.name.length > 0 ? errorStyle : {}}
+            htmlFor="name"
+          >
+            Name
+          </label>
           <input
             ref={this.textInput}
             // autoFocus
@@ -87,14 +130,22 @@ class MailForm extends React.Component {
             type="text"
             name="name"
             id="name"
-            required
+            style={fieldErrors.name.length > 0 ? errorBorder : {}}
           />
-          <div style={{ fontSize: "70%" }} className="error">
-            {fieldErrors.name.length > 0 ? fieldErrors.name : "Your full name"}
+          <div
+            style={fieldErrors.name.length > 0 ? errorStyle : {}}
+            className="error-msg"
+          >
+            {fieldErrors.name.length > 0 ? fieldErrors.name : "full name"}
           </div>
         </div>
         <div className="field half">
-          <label htmlFor="email">Email</label>
+          <label
+            style={fieldErrors.email.length > 0 ? errorStyle : {}}
+            htmlFor="email"
+          >
+            Email
+          </label>
           <input
             onBlur={this.handleBlur}
             value={email}
@@ -102,16 +153,22 @@ class MailForm extends React.Component {
             type="text"
             name="email"
             id="email"
-            required
+            style={fieldErrors.email.length > 0 ? errorBorder : {}}
           />
-          <div style={{ fontSize: "70%" }} className="error">
-            {fieldErrors.email.length > 0
-              ? fieldErrors.email
-              : "enter a valid email"}
+          <div
+            style={fieldErrors.email.length > 0 ? errorStyle : {}}
+            className="error-msg"
+          >
+            {fieldErrors.email.length > 0 ? fieldErrors.email : "valid email"}
           </div>
         </div>
         <div className="field">
-          <label htmlFor="message">Message</label>
+          <label
+            style={fieldErrors.message.length > 0 ? errorStyle : {}}
+            htmlFor="message"
+          >
+            Message
+          </label>
           <textarea
             onBlur={this.handleBlur}
             value={message}
@@ -119,22 +176,35 @@ class MailForm extends React.Component {
             name="message"
             id="message"
             rows="4"
-            required
+            style={fieldErrors.message.length > 0 ? errorBorder : {}}
           ></textarea>
-          <div style={{ fontSize: "70%" }} className="error">
+          <div
+            style={fieldErrors.message.length > 0 ? errorStyle : {}}
+            className={"error-msg"}
+          >
             {fieldErrors.message.length > 0
               ? fieldErrors.message
-              : "describe your project"}
+              : "project description"}
           </div>
         </div>
         <ul className="actions">
           <li>
-            <input
-              onClick={null}
-              type="submit"
-              value="Submit"
-              className="special"
-            />
+            {this.checkIsValid() ? (
+              <input
+                onClick={this.handleSubmission}
+                type="submit"
+                value={"Submit ✔"}
+                className="special"
+              />
+            ) : (
+              <input
+                style={{background:'red'}}
+                onClick={this.handleInvalid}
+                type="submit"
+                value={"Invalid ✘"}
+                className="special"
+              />
+            )}
           </li>
           <li>
             <input onClick={this.reset} type="reset" value="Reset" />
