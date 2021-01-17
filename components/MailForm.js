@@ -10,12 +10,20 @@ class MailForm extends React.Component {
       },
     };
   }
+  componentDidMount() {
+    this.name.focus();
+  }
+  handleBlur = (e) => {
+    console.log(e.target);
+    console.log("was blurred");
+  };
+
   handleChange = (e) => {
     e.preventDefault;
-    const name = e.target.name;
-    const val = e.target.value;
-    let values = this.state.values
-    console.log(val);
+    const { name, value } = e.target;
+    // const val = e.target.value;
+    // let values = this.state.values
+    // console.log(val);
     switch (name) {
       case "name":
         console.log("name", name);
@@ -29,21 +37,28 @@ class MailForm extends React.Component {
       default:
         break;
     }
-    this.setState(prevState=>({
-      values:{
+    this.setState((prevState) => ({
+      values: {
         ...prevState.values,
-        [name]:val
-      }
-    }))
+        [name]: value,
+      },
+    }));
   };
   render() {
+    const { name, email, message } = this.state.values;
     return (
       <form method="post" action="#">
         <div className="field half first">
           <div id="name-error"></div>
           <label htmlFor="name">Name</label>
           <input
-            // ref={}
+            ref={(input) => {
+              this.name = input;
+              console.log(input, "the name")
+            }}
+            // autoFocus
+            onBlur={this.handleBlur}
+            value={name}
             onChange={this.handleChange}
             type="text"
             name="name"
@@ -54,6 +69,8 @@ class MailForm extends React.Component {
         <div className="field half">
           <label htmlFor="email">Email</label>
           <input
+            onBlur={this.handleBlur}
+            value={email}
             onChange={this.handleChange}
             type="text"
             name="email"
@@ -64,6 +81,8 @@ class MailForm extends React.Component {
         <div className="field">
           <label htmlFor="message">Message</label>
           <textarea
+            onBlur={this.handleBlur}
+            value={message}
             onChange={this.handleChange}
             name="message"
             id="message"
