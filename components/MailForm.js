@@ -2,16 +2,40 @@
 class MailForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      values: {
+        name: "",
+        email: "",
+        message: "",
+      },
+    };
   }
-  handleChange=(e)=>{
-    e.preventDefault
-    const name=e.target.name
-    const val=e.target.value
-    console.log(name)
-    console.log(val)
-
-  }
+  handleChange = (e) => {
+    e.preventDefault;
+    const name = e.target.name;
+    const val = e.target.value;
+    let values = this.state.values
+    console.log(val);
+    switch (name) {
+      case "name":
+        console.log("name", name);
+        break;
+      case "email":
+        console.log("name", name);
+        break;
+      case "message":
+        console.log("name", name);
+        break;
+      default:
+        break;
+    }
+    this.setState(prevState=>({
+      values:{
+        ...prevState.values,
+        [name]:val
+      }
+    }))
+  };
   render() {
     return (
       <form method="post" action="#">
@@ -52,7 +76,7 @@ class MailForm extends React.Component {
             <input
               onClick={null}
               type="submit"
-              value="Send Message"
+              value="Submit"
               className="special"
             />
           </li>
