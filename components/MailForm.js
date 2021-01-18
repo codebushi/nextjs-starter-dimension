@@ -143,9 +143,9 @@ class MailForm extends React.Component {
   // }
 
   componentDidUpdate(prevProps, nextState) {
-    console.log("component did updata called");
-    // console.log("did update nextPrps", prevProps.FormIsOpen);
-    // console.log("did update nextState", nextState);
+    if(!this.props.FormIsOpen&&this.state.FormIsOpen){
+      this.setState({FormIsOpen:false})
+    }
     if (
       prevProps.FormIsOpen === true &&
       prevProps.FormIsOpen !== nextState.FormIsOpen
@@ -153,7 +153,7 @@ class MailForm extends React.Component {
       this.setState({ FormIsOpen: true });
       this.textInput.current.focus();
     }
-    // return null;
+    return null;
   }
 
   render() {
