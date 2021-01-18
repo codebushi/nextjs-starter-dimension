@@ -22,7 +22,6 @@ const InitialData = {
     email: "",
     message: "",
   },
-  // FormIsOpen: false,
 };
 class MailForm extends React.Component {
   constructor(props) {
@@ -134,7 +133,7 @@ class MailForm extends React.Component {
   };
 
   componentDidUpdate(prevProps, nextState) {
-    // console.log("component did updata called");
+    console.log("component did updata called");
     // console.log("did update nextPrps", prevProps.FormIsOpen);
     // console.log("did update nextState", nextState);
     if (
@@ -144,7 +143,7 @@ class MailForm extends React.Component {
       this.setState({ FormIsOpen: true });
       this.textInput.current.focus();
     }
-    return null;
+    // return null;
   }
 
   render() {

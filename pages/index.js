@@ -43,6 +43,10 @@ class IndexPage extends React.Component {
     }
   }
 
+  formCloser=()=>{
+    this.setState({FormIsOpen:false})
+  }
+
   handleOpenArticle(article) {
     if(article==='contact'){
       this.setState({FormIsOpen:true})
@@ -199,6 +203,7 @@ class IndexPage extends React.Component {
               article={this.state.article}
               onCloseArticle={this.handleCloseArticle}
               FormIsOpen={this.state.FormIsOpen}
+              formCloser={this.formCloser}
             />
             <Footer timeout={this.state.timeout} />
           </div>
