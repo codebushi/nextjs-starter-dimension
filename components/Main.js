@@ -13,7 +13,11 @@ class Main extends React.Component {
       <div
         className="close"
         onClick={() => {
+          const {article}=this.props
           this.props.onCloseArticle();
+          if(article==='contact'){
+            console.log('the form was closed')
+          }
         }}
       ></div>
     );

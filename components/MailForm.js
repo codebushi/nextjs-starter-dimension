@@ -9,7 +9,7 @@ const errorBorder = {
   border: "solid orangered",
 };
 const nameLength = 5;
-const msgLength = 20;
+const msgLength = 40;
 
 const InitialData = {
   values: {
@@ -33,11 +33,9 @@ class MailForm extends React.Component {
   handleSubmission = (e) => {
     e.preventDefault();
     console.log("send to server");
-    
   };
 
   checkIsValid = () => {
-    console.log("check validity");
     let { name, email, message } = this.state.values;
     if (name.length === 0 || email.length === 0 || message.length == 0) {
       return false;
@@ -52,8 +50,7 @@ class MailForm extends React.Component {
   };
 
   handleBlur = (e) => {
-    console.log(e.target);
-    console.log("was blurred");
+    // console.log("was blurred");
   };
 
   handleChange = (e) => {
@@ -64,7 +61,9 @@ class MailForm extends React.Component {
       case "name":
         fieldErrors.name =
           value.length < nameLength
-            ? `name must be ${nameLength} chars long!`
+            ? `name must be ${nameLength} chars long! ${
+                value.length - nameLength
+              } left`
             : "";
         break;
       case "email":
@@ -75,7 +74,9 @@ class MailForm extends React.Component {
       case "message":
         fieldErrors.message =
           value.length < msgLength
-            ? `project description must be ${msgLength} chars long!`
+            ? `project description must be ${msgLength} chars long!  ${
+                value.length - msgLength
+              } left`
             : "";
 
         break;
@@ -92,24 +93,29 @@ class MailForm extends React.Component {
   reset = () => {
     this.setState(InitialData);
   };
-  handleInvalid=(e)=>{
-    e.preventDefault()
-    alert('the form is invalid, please try again to fill out the form, all fields must be valid')}
-  // componentDidUpdate(prevProps, state) {
-  //      if(this.props.FormIsOpen){
-  //     this.textInput.current.focus();
-  //   }
-  // }
+  handleInvalid = (e) => {
+    e.preventDefault();
+    alert(
+      "the form is invalid, please try again to fill out the form, all fields must be valid"
+    );
+  };
+
+  componentDidUpdate(prevProps, nextState) {
+    // console.log("component did updata called");
+    // console.log("did update nextPrps", prevProps.FormIsOpen);
+    // console.log("did update nextState", nextState);
+    if(prevProps.FormIsOpen===true&&prevProps.FormIsOpen!==nextState.FormIsOpen){
+      this.setState({FormIsOpen:true})
+      this.textInput.current.focus();
+    } return null
+  
+  }
+
   render() {
-    // if(this.props.FormIsOpen){
-    //   console.log('focus the input ref')
-    //   this.textInput.current.focus();
-    // }
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
       <form
-        // onClick={this.focusTextInput}
         noValidate
         method="post"
         action="#"
@@ -198,7 +204,7 @@ class MailForm extends React.Component {
               />
             ) : (
               <input
-                style={{background:'red'}}
+                style={{ background: "red" }}
                 onClick={this.handleInvalid}
                 type="submit"
                 value={"Invalid ✘"}
