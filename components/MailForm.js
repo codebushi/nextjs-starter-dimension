@@ -132,34 +132,32 @@ class MailForm extends React.Component {
     );
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-      if (
-        nextProps.FormIsOpen === true &&
-        nextProps.FormIsOpen !== prevState.FormIsOpen
-      ) {
-        // this.textInput.current.focus();
-        console.log(this, "this")
-        console.log(MailForm, "mailform")
-        // this.textInput.current.focus();
-        return {FormIsOpen: true}
-      } else return {FormIsOpen: false}
-  }
-
-  // componentDidUpdate(prevProps, nextState) {
-  //   console.log("component did updata called");
-  //   // console.log("did update nextPrps", prevProps.FormIsOpen);
-  //   // console.log("did update nextState", nextState);
-  //   if (
-  //     prevProps.FormIsOpen === true &&
-  //     prevProps.FormIsOpen !== nextState.FormIsOpen
-  //   ) {
-  //     this.setState({ FormIsOpen: true });
-  //     this.textInput.current.focus();
-  //   }
-  //   // return null;
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //     if (
+  //       nextProps.FormIsOpen === true &&
+  //       nextProps.FormIsOpen !== prevState.FormIsOpen
+  //     ) {
+  //       // this.textInput.current.focus();
+  //       return {FormIsOpen: true}
+  //     } else return {FormIsOpen: false}
   // }
 
+  componentDidUpdate(prevProps, nextState) {
+    console.log("component did updata called");
+    // console.log("did update nextPrps", prevProps.FormIsOpen);
+    // console.log("did update nextState", nextState);
+    if (
+      prevProps.FormIsOpen === true &&
+      prevProps.FormIsOpen !== nextState.FormIsOpen
+    ) {
+      this.setState({ FormIsOpen: true });
+      this.textInput.current.focus();
+    }
+    // return null;
+  }
+
   render() {
+
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
