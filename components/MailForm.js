@@ -22,7 +22,7 @@ const InitialData = {
     email: "",
     message: "",
   },
-  FormIsOpen: false,
+  // FormIsOpen: false,
 };
 class MailForm extends React.Component {
   constructor(props) {
@@ -59,26 +59,59 @@ class MailForm extends React.Component {
     let { fieldErrors } = this.state;
     switch (name) {
       case "name":
-        fieldErrors.name =
-          value.length < nameLength
-            ? `name must be ${nameLength} chars long! ${
+        if (value.length < nameLength) {
+          this.setState((prevState) => ({
+            fieldErrors: {
+              ...prevState.fieldErrors,
+              name: `name must be ${nameLength} chars long! ${
                 value.length - nameLength
-              } left`
-            : "";
+              } left`,
+            },
+          }));
+        } else {
+          this.setState((prevState) => ({
+            fieldErrors: {
+              ...prevState.fieldErrors,
+              name: "",
+            },
+          }));
+        }
         break;
       case "email":
-        fieldErrors.email = !validEmailRegex.test(value)
-          ? "email is not valid!"
-          : "";
+        if ((fieldErrors.email = !validEmailRegex.test(value))) {
+          this.setState((prevState) => ({
+            fieldErrors: {
+              ...prevState.fieldErrors,
+              email: "email is not valid!",
+            },
+          }));
+        } else {
+          this.setState((prevState) => ({
+            fieldErrors: {
+              ...prevState.fieldErrors,
+              email: "",
+            },
+          }));
+        }
         break;
       case "message":
-        fieldErrors.message =
-          value.length < msgLength
-            ? `project description must be ${msgLength} chars long!  ${
+        if (value.length < msgLength) {
+          this.setState((prevState) => ({
+            fieldErrors: {
+              ...prevState.fieldErrors,
+              message: `project description must be ${msgLength} chars long!  ${
                 value.length - msgLength
-              } left`
-            : "";
-
+              } left`,
+            },
+          }));
+        } else {
+          this.setState((prevState) => ({
+            fieldErrors: {
+              ...prevState.fieldErrors,
+              message: "",
+            },
+          }));
+        }
         break;
       default:
         break;
@@ -104,22 +137,21 @@ class MailForm extends React.Component {
     // console.log("component did updata called");
     // console.log("did update nextPrps", prevProps.FormIsOpen);
     // console.log("did update nextState", nextState);
-    if(prevProps.FormIsOpen===true&&prevProps.FormIsOpen!==nextState.FormIsOpen){
-      this.setState({FormIsOpen:true})
+    if (
+      prevProps.FormIsOpen === true &&
+      prevProps.FormIsOpen !== nextState.FormIsOpen
+    ) {
+      this.setState({ FormIsOpen: true });
       this.textInput.current.focus();
-    } return null
-  
+    }
+    return null;
   }
 
   render() {
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
-      <form
-        noValidate
-        method="post"
-        action="#"
-      >
+      <form noValidate method="post" action="#">
         <div className="field half first">
           <label
             style={fieldErrors.name.length > 0 ? errorStyle : {}}
