@@ -5,6 +5,9 @@ const validEmailRegex = RegExp(
 const errorStyle = {
   color: "orangered",
 };
+const successStyle = {
+  color: "#98ff98"
+}
 const errorBorder = {
   border: "solid orangered",
 };
@@ -167,7 +170,7 @@ class MailForm extends React.Component {
             style={fieldErrors.name.length > 0 ? errorStyle : {}}
             htmlFor="name"
           >
-            Name
+            Name {(name!==""&& fieldErrors.name.length < 1)?<span style={successStyle}>✔</span>:<span style={name===""&& fieldErrors.name.length <1 ? errorStyle : {}}>✘</span>}
           </label>
           <input
             ref={this.textInput}
@@ -192,7 +195,7 @@ class MailForm extends React.Component {
             style={fieldErrors.email.length > 0 ? errorStyle : {}}
             htmlFor="email"
           >
-            Email
+            Email {(email!==""&& fieldErrors.email.length < 1)?<span style={successStyle}>✔</span>:<span style={email===""&& fieldErrors.email.length <1 ? errorStyle : {}}>✘</span>}
           </label>
           <input
             onBlur={this.handleBlur}
@@ -215,7 +218,7 @@ class MailForm extends React.Component {
             style={fieldErrors.message.length > 0 ? errorStyle : {}}
             htmlFor="message"
           >
-            Message
+            Message {(message!==""&& fieldErrors.message.length < 1)?<span style={successStyle}>✔</span>:<span style={message===""&& fieldErrors.message.length <1 ? errorStyle : {}}>✘</span>}
           </label>
           <textarea
             onBlur={this.handleBlur}
