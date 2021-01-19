@@ -34,7 +34,11 @@ class MailForm extends React.Component {
   }
   handleSubmission = (e) => {
     e.preventDefault();
-    console.log("send to server");
+    const theHosting='http://localhost:4000'
+    const {name, email, message}=this.state.values
+    fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
+    .then(msg =>console.log('msg',msg))
+    .catch(err => console.error('err',err))
   };
 
   checkIsValid = () => {
@@ -245,7 +249,7 @@ class MailForm extends React.Component {
                 onClick={this.handleSubmission}
                 type="submit"
                 value={"Submit ✔"}
-                className="special"
+                className="submit"
               />
             ) : (
               <input
@@ -253,7 +257,7 @@ class MailForm extends React.Component {
                 onClick={this.handleInvalid}
                 type="submit"
                 value={"Invalid ✘"}
-                className="special"
+                className="submit"
               />
             )}
           </li>

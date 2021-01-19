@@ -16,7 +16,8 @@ app.get('/', (req, res) => {
 app.get('/send-email', (req,res) => {
     
     //Vars from query string in the search bar
-    const { recipient, sender, topic, text } = req.query; 
+    const { sender, topic, text } = req.query; 
+    let recipient = process.env.EMAIL_TO
     const msg = {
         to: recipient, 
         from: sender,
@@ -24,8 +25,8 @@ app.get('/send-email', (req,res) => {
         text: text,
     }
     sgMail.send(msg)
-    .then((msg) => console.log(text));
-});
+    .then((text) => console.log('text',text));
+})
 console.log('email ', process.env.EMAIL_TO)
 console.log('sg key:', process.env.SENDGRID_API_KEY)
 app.listen(4000, () => console.log("Running on Port 4000")); 
