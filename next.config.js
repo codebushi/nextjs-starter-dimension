@@ -13,11 +13,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader']
+        use: [ 'raw-loader', 'postcss-loader']
       },
       {
         test: /\.s(a|c)ss$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader',
+        use: [ 'raw-loader', 'postcss-loader',
           { loader: 'sass-loader',
             options: {
               outputStyle: 'compressed', // These options are from node-sass: https://github.com/sass/node-sass

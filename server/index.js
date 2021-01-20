@@ -18,14 +18,24 @@ app.get('/send-email', (req,res) => {
     //Vars from query string in the search bar
     const { sender, topic, text } = req.query; 
     let recipient = process.env.EMAIL_TO
+    if(!sender||!topic||!text){
+        return response.status(401).send("data misssing");
+    }
     const msg = {
         to: recipient, 
         from: sender,
         subject: topic,
         text: text,
     }
-    sgMail.send(msg)
-    .then((text) => console.log('text',text));
+    try{
+        sgMail.send(msg)
+        return response.send(
+            `email sent succesfully sedngrid the msg ${msg}`
+          );    
+        } catch (error) {
+        console.error('err',error);
+        return response.status(500).send("error sending mail");
+      }
 })
 console.log('email ', process.env.EMAIL_TO)
 console.log('sg key:', process.env.SENDGRID_API_KEY)
