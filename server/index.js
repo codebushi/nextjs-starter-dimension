@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
     res.send("Welcome to the Sendgrid Emailing Server"); 
 });
 
-app.get('/send-email', (req,res) => {
+app.get('/send-email', (req,response) => {
     
     //Vars from query string in the search bar
     const { sender, topic, text } = req.query; 

@@ -7,7 +7,7 @@ import Main from "../components/Main";
 import Footer from "../components/Footer";
 import ProfileImage from "../components/Profile-Image"
 import { FaVoicemail } from "react-icons/fa";
-// import FaViconfile from "../components/FaViconfile"
+import FaViconfile from "../components/FaViconfile"
 // import "../static/css/avatar.css";
 
 class IndexPage extends React.Component {
@@ -105,7 +105,7 @@ class IndexPage extends React.Component {
               rel="stylesheet"
             />
 
-         {/* <FaViconfile/> */}
+         <FaViconfile/>
           </Head>
 
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
