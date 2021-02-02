@@ -32,20 +32,42 @@ app.get('/send-email', (req,response) => {
         text: `Thank you for your inquiry, what are your project requirements?, What is your overall budget for the project? Do you have a specific timeline you need it completed by?`
     }
 
+
     try{
-        sgMail.send(msg)
-          response.send(
-            `email sent succesfully sedngrid the msg ${msg}`
-          );
-          try{
-            sgMail.send(reminder)
-            return response.send(
-                `email sent succesfully sedngrid the msg ${reminder}`
-              );
-          } catch(error){
-            console.error('second catch err: ',error);
-            return response.status(500).send("second catch error sending mail");
-          }   
+        // sgMail.send(msg)
+        // res.firstMessage="true"
+        //   try{
+        //       if(res.firstMessage){
+        //         sgMail.send(reminder)
+        //         return response.send(
+        //             `reply send the reminder ${reminder}`
+        //           );
+        //       }
+
+        //   } catch(error){
+        //     console.error('second catch err: ',error);
+        //     return response.status(500).send("second catch error sending mail");
+        //   }  
+        
+        const emails = [
+          // {
+          //   to: 'recipient1@example.org',
+          //   from: 'sender@example.org',
+          //   subject: 'Hello recipient 1',
+          //   text: 'Hello plain world!',
+          //   html: '<p>Hello HTML world!</p>',
+          // },
+          // {
+          //   to: 'recipient2@example.org',
+          //   from: 'other-sender@example.org',
+          //   subject: 'Hello recipient 2',
+          //   text: 'Hello other plain world!',
+          //   html: '<p>Hello other HTML world!</p>',
+          // },
+          msg,reminder
+        ];
+        sgMail.send(emails)
+        return response.json({msg:msg, reminder:reminder})
         } catch (error) {
         console.error('first catch err: ',error);
         return response.status(500).send("first catch error sending mail");
