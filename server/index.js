@@ -14,9 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/send-email', (req,response) => {
-    
-    //Vars from query string in the search bar
-    const { sender, topic, text } = req.query; 
+        const { sender, topic, text } = req.query; 
     let recipient = process.env.EMAIL_TO
     if(!sender||!topic||!text){
         return response.status(401).send("data misssing");
@@ -27,14 +25,30 @@ app.get('/send-email', (req,response) => {
         subject: topic,
         text: text,
     }
+    const reminder={
+        to: sender,
+        from: recipient,
+        subject: "Thank you for your inquiry",
+        text: `Thank you for your inquiry, what are your project requirements?, What is your overall budget for the project? Do you have a specific timeline you need it completed by?`
+    }
+
     try{
         sgMail.send(msg)
-        return response.send(
+          response.send(
             `email sent succesfully sedngrid the msg ${msg}`
-          );    
+          );
+          try{
+            sgMail.send(reminder)
+            return response.send(
+                `email sent succesfully sedngrid the msg ${reminder}`
+              );
+          } catch(error){
+            console.error('second catch err: ',error);
+            return response.status(500).send("second catch error sending mail");
+          }   
         } catch (error) {
-        console.error('err',error);
-        return response.status(500).send("error sending mail");
+        console.error('first catch err: ',error);
+        return response.status(500).send("first catch error sending mail");
       }
 })
 console.log('email ', process.env.EMAIL_TO)
