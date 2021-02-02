@@ -36,10 +36,15 @@ class MailForm extends React.Component {
     e.preventDefault();
     const theHosting='http://localhost:4000'
     const {name, email, message}=this.state.values
+    console.log('sending fetch please wait...')
     fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
     .then(msg =>msg.json())
     .then(data=>console.log(data))
-    .catch(err => console.error('err',err))
+    .then(()=>console.log('message sent and recieved successfully'))
+    .catch(err => {
+      console.error('err',err)
+      console.log('error happened...')
+    })
   };
 
   checkIsValid = () => {

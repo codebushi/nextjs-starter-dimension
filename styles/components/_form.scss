@@ -78,6 +78,8 @@
 	input[type="password"],
 	input[type="email"],
 	input[type="tel"],
+	input[type="submit"],
+	input[type="reset"],
 	select,
 	textarea {
 		@include vendor('appearance', 'none');
@@ -97,7 +99,7 @@
 		width: 100%;
 		-webkit-transition: 0.5;
 		transition: 0.5s;
-
+		resize: vertical;
 		&:invalid {
 			box-shadow: none;
 		}
