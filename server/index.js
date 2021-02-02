@@ -33,22 +33,7 @@ app.get('/send-email', (req,response) => {
     }
 
 
-    try{
-        // sgMail.send(msg)
-        // res.firstMessage="true"
-        //   try{
-        //       if(res.firstMessage){
-        //         sgMail.send(reminder)
-        //         return response.send(
-        //             `reply send the reminder ${reminder}`
-        //           );
-        //       }
-
-        //   } catch(error){
-        //     console.error('second catch err: ',error);
-        //     return response.status(500).send("second catch error sending mail");
-        //   }  
-        
+    try{       
         const emails = [
           // {
           //   to: 'recipient1@example.org',

@@ -37,7 +37,8 @@ class MailForm extends React.Component {
     const theHosting='http://localhost:4000'
     const {name, email, message}=this.state.values
     fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
-    .then(msg =>console.log('msg',msg))
+    .then(msg =>msg.json())
+    .then(data=>console.log(data))
     .catch(err => console.error('err',err))
   };
 
