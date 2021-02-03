@@ -197,7 +197,7 @@ class Main extends React.Component {
           style={{ display: "none" }}
         >
           <h2 className="major">Contact</h2>
-          <MailForm FormIsOpen={this.props.FormIsOpen} notifyFailure={this.props.notifyFailure} notifySuccess={this.props.notifySuccess}/>
+          <MailForm FormIsOpen={this.props.FormIsOpen}/>
           <ul className="icons">
             <li>
               <a href="#" className="social"> <FiFacebook /></a>

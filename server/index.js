@@ -33,7 +33,8 @@ app.get('/send-email', (req,response) => {
     }
 
 
-    try{       
+    try{   
+        let status;    
         const emails = [
           // {
           //   to: 'recipient1@example.org',
@@ -51,11 +52,11 @@ app.get('/send-email', (req,response) => {
           // },
           msg,reminder
         ];
-        sgMail.send(emails)
-        return response.json({msg:msg, reminder:reminder})
+        // sgMail.send(emails)
+        return response.json({msg:msg, reminder:reminder, status:'success'})
         } catch (error) {
         console.error('first catch err: ',error);
-        return response.status(500).send("first catch error sending mail");
+        return response.status(500).json({status:'fail'});
       }
 })
 console.log('email ', process.env.EMAIL_TO)

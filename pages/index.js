@@ -6,11 +6,9 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
 import ProfileImage from "../components/Profile-Image"
-import { FaVoicemail } from "react-icons/fa";
 import FaViconfile from "../components/FaViconfile"
 // import "../static/css/avatar.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -93,9 +91,6 @@ class IndexPage extends React.Component {
     }, 350);
   }
 
-  notifySuccess = () => toast("emails sent!");
-  notifyFailure = () => toast("failed sending emails")
-
   render() {
     return (
       <div
@@ -116,8 +111,6 @@ class IndexPage extends React.Component {
 
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
           <div id="wrapper">
-          <ToastContainer />
-
             <ProfileImage
               loading={this.state.loading}
               isDrawing={this.state.isDrawing}
@@ -131,8 +124,6 @@ class IndexPage extends React.Component {
               timeout={this.state.timeout}
             />
             <Main
-              notifyFailure={this.notifyFailure} 
-              notifySuccess={this.notifySuccess}
               isArticleVisible={this.state.isArticleVisible}
               timeout={this.state.timeout}
               articleTimeout={this.state.articleTimeout}

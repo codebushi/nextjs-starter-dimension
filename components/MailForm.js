@@ -1,3 +1,6 @@
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+
+
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
@@ -31,21 +34,51 @@ class MailForm extends React.Component {
     super(props);
     this.state = InitialData;
     this.textInput = React.createRef();
+    this.toastId = React.createRef();
+
   }
+
+  setToast=(status)=>{
+    switch (status) {
+      case 'warning':
+        toast.warn('warning: form fields not valid, please fill out all fields correctly')
+        break;
+      case 'pending':
+        console.log('reached pending')
+        this.toastId.current = toast("Sending your details to abe, please wait", { autoClose: false });       
+        break;
+      case 'success':
+        toast.update(this.toastId.current, { type: toast.TYPE.INFO, render: "success, recieved your details, please check your email for a follow up message", autoClose: 5000 });
+        break;
+      case 'error':
+        toast.error('error, please try again');
+        break;
+      default:
+        console.log('reached default')
+        break;
+    }    
+  }
+
+  // notify = (text) => toast.warn(text);
   handleSubmission = (e) => {
     e.preventDefault();
+    // this.notify('sending fetch please wait...')
+    this.setToast('pending')
     const theHosting='http://localhost:4000'
     const {name, email, message}=this.state.values
-    console.log('sending fetch please wait...')
     fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
     .then(msg =>msg.json())
-    .then(data=>console.log(data))
-    .then(()=>console.log('message sent and recieved successfully'))
-    .then(()=>this.props.notifySuccess())
+    // .then(data=>console.log(data))
+    // .then(()=>console.log('message sent and recieved successfully'))
+    // .then((data)=>this.notify(`${data.status}: message sent and recieved successfully`))
+    // .then(()=>{this.setToast('success');})
+    .then(() => new Promise((resolve) => setTimeout(resolve, 5000)))
+    .then(()=>{this.setToast('success');})
+
     .catch(err => {
       console.error('err',err)
       console.log('error happened...')
-      this.props.notifyFailure()
+      this.setToast('error')
     })
   };
 
@@ -140,11 +173,10 @@ class MailForm extends React.Component {
   reset = () => {
     this.setState(InitialData);
   };
+  
   handleInvalid = (e) => {
     e.preventDefault();
-    alert(
-      "the form is invalid, please try again to fill out the form, all fields must be valid"
-    );
+    this.setToast('warning')
   };
 
   // static getDerivedStateFromProps(nextProps, prevState) {
@@ -176,6 +208,8 @@ class MailForm extends React.Component {
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
+    <>
+      <ToastContainer transition={Zoom}/>
       <form noValidate method="post" action="#">
         <div className="field half first">
           <label
@@ -274,6 +308,7 @@ class MailForm extends React.Component {
           </li>
         </ul>
       </form>
+    </>
     );
   }
 }
