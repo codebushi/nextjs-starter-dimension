@@ -39,19 +39,22 @@ class MailForm extends React.Component {
   }
 
   setToast=(status)=>{
+    console.log('setToast called with status = ', status)
     switch (status) {
       case 'warning':
-        toast.warn('warning: form fields not valid, please fill out all fields correctly')
+        toast.warn(`${status}: form fields not valid, please fill out all fields correctly`)
         break;
       case 'pending':
         console.log('reached pending')
-        this.toastId.current = toast("Sending your details to abe, please wait", { autoClose: false });       
+        this.toastId.current = toast(`${status}: sending your details, please wait`, { autoClose: false });       
         break;
       case 'success':
-        toast.update(this.toastId.current, { type: toast.TYPE.INFO, render: "success, recieved your details, please check your email for a follow up message", autoClose: 5000 });
+        console.log('reached success')
+        toast.update(this.toastId.current, { type: toast.TYPE.INFO, render: `${status}: recieved your details, please check your email or spambox if youve not recieved anything`, autoClose: 5000 });
         break;
       case 'error':
-        toast.error('error, please try again');
+        console.log('reached error')
+        toast.error(`${status}: please try again`);
         break;
       default:
         console.log('reached default')
@@ -59,25 +62,18 @@ class MailForm extends React.Component {
     }    
   }
 
-  // notify = (text) => toast.warn(text);
   handleSubmission = (e) => {
     e.preventDefault();
-    // this.notify('sending fetch please wait...')
     this.setToast('pending')
     const theHosting='http://localhost:4000'
     const {name, email, message}=this.state.values
     fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
     .then(msg =>msg.json())
-    // .then(data=>console.log(data))
-    // .then(()=>console.log('message sent and recieved successfully'))
-    // .then((data)=>this.notify(`${data.status}: message sent and recieved successfully`))
-    // .then(()=>{this.setToast('success');})
-    .then(() => new Promise((resolve) => setTimeout(resolve, 5000)))
-    .then(()=>{this.setToast('success');})
-
+    .then((data)=> console.log(data))
+    .then(() => new Promise((resolve) => setTimeout(resolve(), 1000)))
+    .then((data) => {this.setToast(data.status);})
     .catch(err => {
       console.error('err',err)
-      console.log('error happened...')
       this.setToast('error')
     })
   };
