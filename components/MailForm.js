@@ -41,9 +41,11 @@ class MailForm extends React.Component {
     .then(msg =>msg.json())
     .then(data=>console.log(data))
     .then(()=>console.log('message sent and recieved successfully'))
+    .then(()=>this.props.notifySuccess())
     .catch(err => {
       console.error('err',err)
       console.log('error happened...')
+      this.props.notifyFailure()
     })
   };
 

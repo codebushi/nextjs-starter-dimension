@@ -29,6 +29,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-icons": "^3.11.0",
+    "react-toastify": "^7.0.3",
     "sass-loader": "^7.1.0"
   }
 }

@@ -28,7 +28,7 @@ class Main extends React.Component {
         tabIndex={0}
         className="close"
         onClick={() => {
-          closeHandler()            
+          closeHandler() 
         }}
       ></div>
     );
@@ -197,7 +197,7 @@ class Main extends React.Component {
           style={{ display: "none" }}
         >
           <h2 className="major">Contact</h2>
-          <MailForm FormIsOpen={this.props.FormIsOpen}/>
+          <MailForm FormIsOpen={this.props.FormIsOpen} notifyFailure={this.props.notifyFailure} notifySuccess={this.props.notifySuccess}/>
           <ul className="icons">
             <li>
               <a href="#" className="social"> <FiFacebook /></a>
