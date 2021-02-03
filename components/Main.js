@@ -9,16 +9,26 @@ import {FiGithub, FiLink, FiFacebook} from "react-icons/fi"
 import MailForm from "./MailForm";
 class Main extends React.Component {
   render() {
+    const {article, formCloser}=this.props
+    const closeHandler=()=>{
+      this.props.onCloseArticle();
+      if(article==='contact'){
+        console.log('the form was closed')
+        formCloser()
+      }
+    }
+
     let close = (
       <div
+        onKeyPress={(e)=>{
+          if(e.key === 'Enter'){
+            closeHandler()
+          }
+        }}
+        tabIndex={0}
         className="close"
         onClick={() => {
-          const {article, formCloser}=this.props
-          this.props.onCloseArticle();
-          if(article==='contact'){
-            console.log('the form was closed')
-            formCloser()
-          }
+          closeHandler()            
         }}
       ></div>
     );

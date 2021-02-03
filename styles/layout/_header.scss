@@ -100,8 +100,20 @@ $spotThree: #352155;
     left: 27px;
    }
 
-
-
+   @media only screen and (max-width: 360px) {
+    .text-wrap span{
+      height: 77px!important;
+      left: 22px!important;
+      bottom: 25px!important;
+    }
+  }
+  @media screen and (max-width: 736px) and (min-width: 360px){
+    .text-wrap span{
+      height: 87px!important;
+      left: 24px!important;
+      bottom: 22px!important;
+    }
+  }
    h1,h2{
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
