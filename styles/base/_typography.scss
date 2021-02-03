@@ -97,10 +97,19 @@
 		letter-spacing: _font(letter-spacing-heading);
 	}
 
+	.inner h1 {
+		font-size: 1.8rem;
+		letter-spacing: .3rem;
+	}
+
 	h2 {
 		font-size: 1.5rem;
 		line-height: 1.4;
 		letter-spacing: _font(letter-spacing-heading);
+	}
+
+	.inner h2 {
+		font-size: 1.6rem;
 	}
 
 	h3 {

@@ -3,16 +3,21 @@ import { FaCode } from "react-icons/fa";
 
 const People={
     'header':'Some People',
-    'p':<a href='https://www.freecodecamp.org/news/how-i-changed-careers-and-landed-a-job-as-a-developer-in-six-months-d5cc5f7c19f6/'>Land a job as a developer in 6 months going from knowing only rudimentary things</a>
+    'p':<a href='https://www.freecodecamp.org/news/how-i-changed-careers-and-landed-a-job-as-a-developer-in-six-months-d5cc5f7c19f6/'>Land a job as a developer in 6 months</a>
 }
 const Abe={
     'header':'Abe',
-    'p':'has been studying for 3 years... has yet to be interviewed'
+    'p':'has been developing for 3 years, yet to be interviewed'
+}
+const handleKeyPress=(e, callback)=>{
+    if(e.key === 'Enter'){
+        callback()
+    }
 }
 const Header = (props) => (
 
     <header id="header" style={props.timeout ? { display: 'none' } : {}}> 
-        <div id="" onClick={()=>props.isDrawing()} className="logo glowButton">
+        <div id="" onClick={()=>props.isDrawing()} className="logo glowButton" tabIndex={0} onKeyPress={handleKeyPress, props.isDrawing}>
             {/*<span className="icon fa-diamond"></span>*/}
             <div>
             <div className="text-wrap">
@@ -22,13 +27,14 @@ const Header = (props) => (
             <span style={{transform:'rotate(35deg)'}}>h</span>       
             </div>
 
-            <FaCode id="codeButton" style={props.draw? {transform: 'rotateX(3.142rad)'}:{}} />
+            <FaCode id="codeButton" style={props.draw? {transform: 'rotateX(3.142rad)'}:{}}/>
             </div>
  
         </div>
         <div className="content">
             <div className="inner">
-                <h1>{!props.draw?People['header']:Abe['header']}</h1>
+                <h1>Marketing, Design, Coding</h1>
+                <h2>{!props.draw?People['header']:Abe['header']}</h2>
                 {/* {props.draw?(<p>"People <a href="https://www.freecodecamp.org/news/how-i-changed-careers-and-landed-a-job-as-a-developer-in-six-months-d5cc5f7c19f6/">Land a job as a developer in 6 months</a>
                 from knowing only rudimentary things about JavaScript and CSS to landing a job as a front-end developer 
               </p>):"H"} */}
