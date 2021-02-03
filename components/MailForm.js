@@ -50,7 +50,8 @@ class MailForm extends React.Component {
         break;
       case 'success':
         console.log('reached success')
-        toast.update(this.toastId.current, { type: toast.TYPE.INFO, render: `${status}: recieved your details, please check your email or spambox if youve not recieved anything`, autoClose: 5000 });
+        toast.update(this.toastId.current, { type: toast.TYPE.INFO, render: `${status}: recieved your details, please check your email or spambox if youve not recieved anything`, autoClose: 5000
+      });
         break;
       case 'error':
         console.log('reached error')
@@ -69,9 +70,10 @@ class MailForm extends React.Component {
     const {name, email, message}=this.state.values
     fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
     .then(msg =>msg.json())
-    .then((data)=> console.log(data))
-    .then(() => new Promise((resolve) => setTimeout(resolve(), 1000)))
-    .then((data) => {this.setToast(data.status);})
+    // .then((data)=> console.log(data))
+    // .then(() => new Promise((resolve) => setTimeout(resolve, 2000)))
+    .then((data)=>{this.setToast(data.status);})
+    .then(()=>console.log('resolved everything'))
     .catch(err => {
       console.error('err',err)
       this.setToast('error')
