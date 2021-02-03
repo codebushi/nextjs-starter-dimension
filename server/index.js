@@ -3,11 +3,15 @@ const express = require('express');
 require('dotenv').config()
 const cors = require('cors'); 
 const sgMail = require('@sendgrid/mail');  
-
 const app = express(); 
+app.use(cors()); 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-app.use(cors()); 
+const fs = require("fs");
+
+pathToAttachment = `${__dirname}/resume.pdf`;
+attachment = fs.readFileSync(pathToAttachment).toString("base64");
+
 
 app.get('/', (req, res) => {
     res.send("Welcome to the Sendgrid Emailing Server"); 
@@ -22,37 +26,30 @@ app.get('/send-email', (req,response) => {
     const msg = {
         to: recipient, 
         from: sender,
-        subject: topic,
+        subject: `${topic} : request for technology services from website`,
         text: text,
     }
     const reminder={
         to: sender,
         from: recipient,
-        subject: "Thank you for your inquiry",
-        text: `Thank you for your inquiry, what are your project requirements?, What is your overall budget for the project? Do you have a specific timeline you need it completed by?`
+        subject: `${topic}, Thank you for your inquiry`,
+        text: `${topic} Thank you for your inquiry, what are your project requirements? What is your overall budget for the project? Do you have a specific timeline you need it completed by? In the meantime please see my resume.`,
+        attachments: [
+            {
+              content: attachment,
+              filename: "attachment.pdf",
+              type: "application/pdf",
+              disposition: "attachment"
+            }
+          ]
     }
 
 
     try{   
-        let status;    
         const emails = [
-          // {
-          //   to: 'recipient1@example.org',
-          //   from: 'sender@example.org',
-          //   subject: 'Hello recipient 1',
-          //   text: 'Hello plain world!',
-          //   html: '<p>Hello HTML world!</p>',
-          // },
-          // {
-          //   to: 'recipient2@example.org',
-          //   from: 'other-sender@example.org',
-          //   subject: 'Hello recipient 2',
-          //   text: 'Hello other plain world!',
-          //   html: '<p>Hello other HTML world!</p>',
-          // },
           msg,reminder
         ];
-        // sgMail.send(emails)
+        sgMail.send(emails)
         return response.json({msg:msg, reminder:reminder, status:'success'})
         } catch (error) {
         console.error('first catch err: ',error);

@@ -70,9 +70,12 @@ class MailForm extends React.Component {
     const {name, email, message}=this.state.values
     fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
     .then(msg =>msg.json())
-    // .then((data)=> console.log(data))
     // .then(() => new Promise((resolve) => setTimeout(resolve, 2000)))
-    .then((data)=>{this.setToast(data.status);})
+    .then((data)=>{
+      console.log(data);
+      this.setToast(data.status);
+      this.setState(InitialData);
+    })
     .then(()=>console.log('resolved everything'))
     .catch(err => {
       console.error('err',err)
