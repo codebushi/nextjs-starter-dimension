@@ -1,19 +1,31 @@
-import { ToastContainer, toast, Zoom } from 'react-toastify';
+import { ToastContainer, toast, Zoom, cssTransition } from 'react-toastify';
 
 
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
 
+const bounce = cssTransition({
+  enter: "animate__animated animate__rubberBand",
+  exit: "animate__animated animate__zoomOut"
+});
+
 const errorStyle = {
   color: "orangered",
 };
 const successStyle = {
-  color: "#98ff98"
+  color: "rgb(156 205 247)"
 }
+const successBorder ={
+  border: "5px solid rgb(156 205 247)",
+  background: "#E8F0F0",
+  color: "black"
+}
+
 const errorBorder = {
   border: "solid orangered",
 };
+
 const nameLength = 5;
 const msgLength = 40;
 
@@ -173,6 +185,7 @@ class MailForm extends React.Component {
   };
   reset = () => {
     this.setState(InitialData);
+    this.textInput.current.focus();
   };
   
   handleInvalid = (e) => {
@@ -214,10 +227,15 @@ class MailForm extends React.Component {
       <form noValidate method="post" action="#">
         <div className="field half first">
           <label
-            style={fieldErrors.name.length > 0 ? errorStyle : {}}
+            // style={fieldErrors.name.length > 0 ? errorStyle : {}}
+            style={
+              (fieldErrors.name.length > 0)||(this.state.values.name.length < 1)
+               ? {} 
+               : successStyle}
             htmlFor="name"
           >
-            Name {(name!==""&& fieldErrors.name.length < 1)?<span style={successStyle}>✔</span>:<span style={name===""&& fieldErrors.name.length <1 ? errorStyle : {}}>✘</span>}
+            Full Name 
+            {(name!==""&& fieldErrors.name.length < 1)?<span style={successStyle}>✔</span>:null}
           </label>
           <input
             ref={this.textInput}
@@ -228,10 +246,12 @@ class MailForm extends React.Component {
             type="text"
             name="name"
             id="name"
-            style={fieldErrors.name.length > 0 ? errorBorder : {}}
+            style={
+              (fieldErrors.name.length > 0)||(this.state.values.name.length < 1)
+               ? {} 
+               : successBorder}           
           />
           <div
-            style={fieldErrors.name.length > 0 ? errorStyle : {}}
             className="error-msg"
           >
             {fieldErrors.name.length > 0 ? fieldErrors.name : "full name"}
@@ -239,10 +259,14 @@ class MailForm extends React.Component {
         </div>
         <div className="field half">
           <label
-            style={fieldErrors.email.length > 0 ? errorStyle : {}}
+            style={
+              (fieldErrors.email.length > 0)||(this.state.values.email.length < 1)
+               ? {} 
+               : successStyle}
             htmlFor="email"
           >
-            Email {(email!==""&& fieldErrors.email.length < 1)?<span style={successStyle}>✔</span>:<span style={email===""&& fieldErrors.email.length <1 ? errorStyle : {}}>✘</span>}
+            Email 
+            {(email!==""&& fieldErrors.email.length < 1)?<span style={successStyle}>✔</span>:null}
           </label>
           <input
             onBlur={this.handleBlur}
@@ -251,10 +275,12 @@ class MailForm extends React.Component {
             type="text"
             name="email"
             id="email"
-            style={fieldErrors.email.length > 0 ? errorBorder : {}}
+            style={
+              (fieldErrors.email.length > 0)||(this.state.values.email.length < 1)
+               ? {} 
+               : successBorder} 
           />
           <div
-            style={fieldErrors.email.length > 0 ? errorStyle : {}}
             className="error-msg"
           >
             {fieldErrors.email.length > 0 ? fieldErrors.email : "valid email"}
@@ -262,10 +288,14 @@ class MailForm extends React.Component {
         </div>
         <div className="field">
           <label
-            style={fieldErrors.message.length > 0 ? errorStyle : {}}
+            style={
+              (fieldErrors.message.length > 0)||(this.state.values.message.length < 1)
+               ? {} 
+               : successStyle}
             htmlFor="message"
           >
-            Message {(message!==""&& fieldErrors.message.length < 1)?<span style={successStyle}>✔</span>:<span style={message===""&& fieldErrors.message.length <1 ? errorStyle : {}}>✘</span>}
+            Message 
+            {(message!==""&& fieldErrors.message.length < 1)?<span style={successStyle}>✔</span>:null}
           </label>
           <textarea
             onBlur={this.handleBlur}
@@ -274,10 +304,12 @@ class MailForm extends React.Component {
             name="message"
             id="message"
             rows="4"
-            style={fieldErrors.message.length > 0 ? errorBorder : {}}
+            style={
+              (fieldErrors.message.length > 0)||(this.state.values.message.length < 1)
+               ? {} 
+               : successBorder}   
           ></textarea>
           <div
-            style={fieldErrors.message.length > 0 ? errorStyle : {}}
             className={"error-msg"}
           >
             {fieldErrors.message.length > 0
@@ -291,17 +323,19 @@ class MailForm extends React.Component {
               <input
                 onClick={this.handleSubmission}
                 type="submit"
-                value={"Submit ✔"}
+                value={"Submit"}
                 className="submit"
               />
             ) : (
-              <input
-                style={{ background: "red" }}
-                onClick={this.handleInvalid}
-                type="submit"
-                value={"Invalid ✘"}
-                className="submit"
-              />
+              <div onClick={()=>console.log('he tried to submit a disabled form')}>
+                <input
+                  disabled
+                  type="submit"
+                  value={"Submit"}
+                  className="submit"
+                />
+              </div>
+    
             )}
           </li>
           <li>
