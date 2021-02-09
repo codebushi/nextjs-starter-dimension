@@ -1,5 +1,4 @@
-import { ToastContainer, toast, Zoom, cssTransition } from 'react-toastify';
-
+import { ToastContainer, toast, Zoom, cssTransition } from "react-toastify";
 
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -7,20 +6,20 @@ const validEmailRegex = RegExp(
 
 const bounce = cssTransition({
   enter: "animate__animated animate__rubberBand",
-  exit: "animate__animated animate__zoomOut"
+  exit: "animate__animated animate__zoomOut",
 });
 
 const errorStyle = {
   color: "orangered",
 };
 const successStyle = {
-  color: "rgb(156 205 247)"
-}
-const successBorder ={
+  color: "rgb(156 205 247)",
+};
+const successBorder = {
   border: "5px solid rgb(156 205 247)",
   background: "#E8F0F0",
-  color: "black"
-}
+  color: "black",
+};
 
 const errorBorder = {
   border: "solid orangered",
@@ -47,52 +46,61 @@ class MailForm extends React.Component {
     this.state = InitialData;
     this.textInput = React.createRef();
     this.toastId = React.createRef();
-
   }
 
-  setToast=(status)=>{
-    console.log('setToast called with status = ', status)
+  setToast = (status) => {
+    console.log("setToast called with status = ", status);
     switch (status) {
-      case 'warning':
-        toast.warn(`${status}: form fields not valid, please fill out all fields correctly`)
+      case "warning":
+        toast.warn(
+          `${status}: form fields not valid, please fill out all fields correctly`
+        );
         break;
-      case 'pending':
-        console.log('reached pending')
-        this.toastId.current = toast(`${status}: sending your details, please wait`, { autoClose: false });       
+      case "pending":
+        console.log("reached pending");
+        this.toastId.current = toast(
+          `${status}: sending your details, please wait`,
+          { autoClose: false }
+        );
         break;
-      case 'success':
-        console.log('reached success')
-        toast.update(this.toastId.current, { type: toast.TYPE.INFO, render: `${status}: recieved your details, please check your email or spambox if youve not recieved anything`, autoClose: 5000
-      });
+      case "success":
+        console.log("reached success");
+        toast.update(this.toastId.current, {
+          type: toast.TYPE.INFO,
+          render: `${status}: recieved your details, please check your email or spambox if youve not recieved anything`,
+          autoClose: 5000,
+        });
         break;
-      case 'error':
-        console.log('reached error')
+      case "error":
+        console.log("reached error");
         toast.error(`${status}: please try again`);
         break;
       default:
-        console.log('reached default')
+        console.log("reached default");
         break;
-    }    
-  }
+    }
+  };
 
   handleSubmission = (e) => {
     e.preventDefault();
-    this.setToast('pending')
-    const theHosting='http://localhost:4000'
-    const {name, email, message}=this.state.values
-    fetch(`${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`)
-    .then(msg =>msg.json())
-    // .then(() => new Promise((resolve) => setTimeout(resolve, 2000)))
-    .then((data)=>{
-      console.log(data);
-      this.setToast(data.status);
-      this.setState(InitialData);
-    })
-    .then(()=>console.log('resolved everything'))
-    .catch(err => {
-      console.error('err',err)
-      this.setToast('error')
-    })
+    this.setToast("pending");
+    const theHosting = "http://localhost:4000";
+    const { name, email, message } = this.state.values;
+    fetch(
+      `${theHosting}/send-email?sender=${email}&topic=${name}&text=${message}`
+    )
+      .then((msg) => msg.json())
+      // .then(() => new Promise((resolve) => setTimeout(resolve, 2000)))
+      .then((data) => {
+        console.log(data);
+        this.setToast(data.status);
+        this.setState(InitialData);
+      })
+      .then(() => console.log("resolved everything"))
+      .catch((err) => {
+        console.error("err", err);
+        this.setToast("error");
+      });
   };
 
   checkIsValid = () => {
@@ -187,10 +195,10 @@ class MailForm extends React.Component {
     this.setState(InitialData);
     this.textInput.current.focus();
   };
-  
+
   handleInvalid = (e) => {
     e.preventDefault();
-    this.setToast('warning')
+    this.setToast("warning");
   };
 
   // static getDerivedStateFromProps(nextProps, prevState) {
@@ -204,8 +212,8 @@ class MailForm extends React.Component {
   // }
 
   componentDidUpdate(prevProps, nextState) {
-    if(!this.props.FormIsOpen&&this.state.FormIsOpen){
-      this.setState({FormIsOpen:false})
+    if (!this.props.FormIsOpen && this.state.FormIsOpen) {
+      this.setState({ FormIsOpen: false });
     }
     if (
       prevProps.FormIsOpen === true &&
@@ -216,134 +224,196 @@ class MailForm extends React.Component {
     }
     return null;
   }
+  focusHandler = (e) => {
+    console.log(e.target);
+  };
 
   render() {
-
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
-    <>
-      <ToastContainer transition={Zoom}/>
-      <form noValidate method="post" action="#">
-        <div className="field half first">
-          <label
-            // style={fieldErrors.name.length > 0 ? errorStyle : {}}
-            style={
-              (fieldErrors.name.length > 0)||(this.state.values.name.length < 1)
-               ? {} 
-               : successStyle}
-            htmlFor="name"
-          >
-            Full Name 
-            {(name!==""&& fieldErrors.name.length < 1)?<span style={successStyle}>✔</span>:null}
-          </label>
-          <input
-            ref={this.textInput}
-            // autoFocus
-            onBlur={this.handleBlur}
-            value={name}
-            onChange={this.handleChange}
-            type="text"
-            name="name"
-            id="name"
-            style={
-              (fieldErrors.name.length > 0)||(this.state.values.name.length < 1)
-               ? {} 
-               : successBorder}           
-          />
-          <div
-            className="error-msg"
-          >
-            {fieldErrors.name.length > 0 ? fieldErrors.name : "full name"}
-          </div>
+      <>
+        <ToastContainer transition={Zoom} />
+
+        <div className="wizard_horizontal">
+          <ul className="wizard_steps">
+            <li>
+              <a className="step_bubbles" href="#step-1">
+                <span className="step_no">1</span>
+                <span className="step_descr">
+                  Step 1<br />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a className="step_bubbles" href="#step-2">
+                <span className="step_no">2</span>
+                <span className="step_descr">
+                  Step 2<br />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a className="step_bubbles" href="#step-3">
+                <span className="step_no">3</span>
+                <span className="step_descr">
+                  Step 3<br />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a className="step_bubbles" href="#step-4">
+                <span className="step_no">4</span>
+                <span className="step_descr">
+                  Step 4<br />
+                </span>
+              </a>
+            </li>
+          </ul>
         </div>
-        <div className="field half">
-          <label
-            style={
-              (fieldErrors.email.length > 0)||(this.state.values.email.length < 1)
-               ? {} 
-               : successStyle}
-            htmlFor="email"
-          >
-            Email 
-            {(email!==""&& fieldErrors.email.length < 1)?<span style={successStyle}>✔</span>:null}
-          </label>
-          <input
-            onBlur={this.handleBlur}
-            value={email}
-            onChange={this.handleChange}
-            type="text"
-            name="email"
-            id="email"
-            style={
-              (fieldErrors.email.length > 0)||(this.state.values.email.length < 1)
-               ? {} 
-               : successBorder} 
-          />
-          <div
-            className="error-msg"
-          >
-            {fieldErrors.email.length > 0 ? fieldErrors.email : "valid email"}
-          </div>
-        </div>
-        <div className="field">
-          <label
-            style={
-              (fieldErrors.message.length > 0)||(this.state.values.message.length < 1)
-               ? {} 
-               : successStyle}
-            htmlFor="message"
-          >
-            Message 
-            {(message!==""&& fieldErrors.message.length < 1)?<span style={successStyle}>✔</span>:null}
-          </label>
-          <textarea
-            onBlur={this.handleBlur}
-            value={message}
-            onChange={this.handleChange}
-            name="message"
-            id="message"
-            rows="4"
-            style={
-              (fieldErrors.message.length > 0)||(this.state.values.message.length < 1)
-               ? {} 
-               : successBorder}   
-          ></textarea>
-          <div
-            className={"error-msg"}
-          >
-            {fieldErrors.message.length > 0
-              ? fieldErrors.message
-              : "project description"}
-          </div>
-        </div>
-        <ul className="actions">
-          <li>
-            {this.checkIsValid() ? (
+
+        <form noValidate method="post" action="#">
+          <div id="first-form-step">
+            <div className="field half first">
+              <label
+                // style={fieldErrors.name.length > 0 ? errorStyle : {}}
+                style={
+                  fieldErrors.name.length > 0 ||
+                  this.state.values.name.length < 1
+                    ? {}
+                    : successStyle
+                }
+                htmlFor="name"
+              >
+                Full Name
+                {name !== "" && fieldErrors.name.length < 1 ? (
+                  <span style={successStyle}>✔</span>
+                ) : null}
+              </label>
               <input
-                onClick={this.handleSubmission}
-                type="submit"
-                value={"Submit"}
-                className="submit"
+                ref={this.textInput}
+                // autoFocus
+                onFocus={(e) => this.focusHandler(e)}
+                onBlur={this.handleBlur}
+                value={name}
+                onChange={this.handleChange}
+                type="text"
+                name="name"
+                id="name"
+                style={
+                  fieldErrors.name.length > 0 ||
+                  this.state.values.name.length < 1
+                    ? {}
+                    : successBorder
+                }
               />
-            ) : (
-              <div onClick={()=>console.log('he tried to submit a disabled form')}>
+              <div className="error-msg">
+                {fieldErrors.name.length > 0 ? fieldErrors.name : "full name"}
+              </div>
+            </div>
+            <div className="field half">
+              <label
+                style={
+                  fieldErrors.email.length > 0 ||
+                  this.state.values.email.length < 1
+                    ? {}
+                    : successStyle
+                }
+                htmlFor="email"
+              >
+                Email
+                {email !== "" && fieldErrors.email.length < 1 ? (
+                  <span style={successStyle}>✔</span>
+                ) : null}
+              </label>
+              <input
+                onFocus={(e) => this.focusHandler(e)}
+                onBlur={this.handleBlur}
+                value={email}
+                onChange={this.handleChange}
+                type="text"
+                name="email"
+                id="email"
+                style={
+                  fieldErrors.email.length > 0 ||
+                  this.state.values.email.length < 1
+                    ? {}
+                    : successBorder
+                }
+              />
+              <div className="error-msg">
+                {fieldErrors.email.length > 0
+                  ? fieldErrors.email
+                  : "valid email"}
+              </div>
+            </div>
+            <div className="field">
+              <label
+                style={
+                  fieldErrors.message.length > 0 ||
+                  this.state.values.message.length < 1
+                    ? {}
+                    : successStyle
+                }
+                htmlFor="message"
+              >
+                Message
+                {message !== "" && fieldErrors.message.length < 1 ? (
+                  <span style={successStyle}>✔</span>
+                ) : null}
+              </label>
+              <textarea
+                onFocus={(e) => this.focusHandler(e)}
+                onBlur={this.handleBlur}
+                value={message}
+                onChange={this.handleChange}
+                name="message"
+                id="message"
+                rows="4"
+                style={
+                  fieldErrors.message.length > 0 ||
+                  this.state.values.message.length < 1
+                    ? {}
+                    : successBorder
+                }
+              ></textarea>
+              <div className={"error-msg"}>
+                {fieldErrors.message.length > 0
+                  ? fieldErrors.message
+                  : "project description"}
+              </div>
+            </div>
+          </div>
+          <ul className="actions">
+            <li>
+              {this.checkIsValid() ? (
                 <input
-                  disabled
+                  onClick={this.handleSubmission}
                   type="submit"
                   value={"Submit"}
                   className="submit"
                 />
-              </div>
-    
-            )}
-          </li>
-          <li>
-            <input onClick={this.reset} type="reset" value="Reset" />
-          </li>
-        </ul>
-      </form>
-    </>
+              ) : (
+                <div
+                  onClick={() =>
+                    console.log("he tried to submit a disabled form")
+                  }
+                >
+                  <input
+                    disabled
+                    type="submit"
+                    value={"Submit"}
+                    className="submit"
+                  />
+                </div>
+              )}
+            </li>
+            <li>
+              <input onClick={this.reset} type="reset" value="Reset" />
+            </li>
+          </ul>
+        </form>
+      </>
     );
   }
 }

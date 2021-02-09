@@ -43,7 +43,7 @@
 			border-bottom-color: transparent;
 		}
 	}
-	a:not(.social) {
+	a:not(.social, .step_bubbles) {
 		border-bottom: dotted 1px _palette(fg-light);
 	}
 	.social{
@@ -109,7 +109,7 @@
 	}
 
 	.inner h2 {
-		font-size: 1.6rem;
+		font-size: 1.5rem;
 	}
 
 	h3 {
