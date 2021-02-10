@@ -1,5 +1,7 @@
 import { ToastContainer, toast, Zoom, cssTransition } from "react-toastify";
-
+import Select from "./Select";
+import PhoneNumber from "./Phone";
+import PaymentForm from "./Payment";
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
@@ -29,6 +31,7 @@ const nameLength = 5;
 const msgLength = 40;
 
 const InitialData = {
+  // currentStep: 1,
   values: {
     name: "",
     email: "",
@@ -193,7 +196,7 @@ class MailForm extends React.Component {
   };
   reset = () => {
     this.setState(InitialData);
-    this.textInput.current.focus();
+    // this.textInput.current.focus();
   };
 
   handleInvalid = (e) => {
@@ -211,24 +214,73 @@ class MailForm extends React.Component {
   //     } else return {FormIsOpen: false}
   // }
 
-  componentDidUpdate(prevProps, nextState) {
-    if (!this.props.FormIsOpen && this.state.FormIsOpen) {
-      this.setState({ FormIsOpen: false });
-    }
-    if (
-      prevProps.FormIsOpen === true &&
-      prevProps.FormIsOpen !== nextState.FormIsOpen
-    ) {
-      this.setState({ FormIsOpen: true });
-      this.textInput.current.focus();
-    }
-    return null;
-  }
+  // componentDidUpdate(prevProps, nextState) {
+  //   if (!this.props.FormIsOpen && this.state.FormIsOpen) {
+  //     this.setState({ FormIsOpen: false });
+  //   }
+  //   if (
+  //     prevProps.FormIsOpen === true &&
+  //     prevProps.FormIsOpen !== nextState.FormIsOpen
+  //   ) {
+  //     this.setState({ FormIsOpen: true });
+  //     this.textInput.current.focus();
+  //   }
+  //   return null;
+  // }
   focusHandler = (e) => {
     console.log(e.target);
   };
 
+  _next = () => {
+    let currentStep = this.state.currentStep
+    currentStep = currentStep >= 2? 3: currentStep + 1
+    this.setState({
+      currentStep: currentStep
+    })
+  }
+
+  _prev = () => {
+    let currentStep = this.state.currentStep
+    currentStep = currentStep <= 1? 1: currentStep - 1
+    this.setState({
+      currentStep: currentStep
+    })
+  }
+
+  previousButton() {
+    let currentStep = this.state.currentStep;
+    if(currentStep !==1){
+      return (
+        <button 
+          className="btn btn-secondary" 
+          type="button" onClick={this._prev}>
+        Previous
+        </button>
+      )
+    }
+    return null;
+  }
+  
+  nextButton(){
+    let currentStep = this.state.currentStep;
+    if(currentStep <3){
+      return (
+        <button 
+          className="btn btn-primary float-right" 
+          type="button" onClick={this._next}>
+        Next
+        </button>        
+      )
+    }
+    return null;
+  }
+
+  componentDidMount(){
+    this.setState({currentStep: 1})
+  }
+    
   render() {
+    // const theStep = this.state.currentStep;
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
     return (
@@ -271,7 +323,7 @@ class MailForm extends React.Component {
             </li>
           </ul>
         </div>
-
+{/* 
         <form noValidate method="post" action="#">
           <div id="first-form-step">
             <div className="field half first">
@@ -412,9 +464,299 @@ class MailForm extends React.Component {
               <input onClick={this.reset} type="reset" value="Reset" />
             </li>
           </ul>
-        </form>
+        </form>   
+     */}
+
+
+
+
+
+
+    <form noValidate method="post" action="#">
+      {/* 
+        render the form steps and pass required props in
+      */}
+        <Step1
+          email={email}
+          name={name} 
+          fieldErrors={fieldErrors}
+          currentStep={this.state.currentStep} 
+          handleChange={this.handleChange}
+          values={this.state.values}
+          handleBlur={this.handleBlur}
+          // email={this.state.email}
+        />
+        <Step2 
+          currentStep={this.state.currentStep} 
+          // handleChange={this.handleChange}
+          // username={this.state.username}
+          fieldErrors={fieldErrors}
+          handleChange={this.handleChange}
+          values={this.state.values}
+          handleBlur={this.handleBlur}
+          message={message} 
+
+        />
+        <Step3 
+          currentStep={this.state.currentStep} 
+          // handleChange={this.handleChange}
+          // password={this.state.password}
+        />
+        {this.previousButton()}
+        {this.nextButton()}
+
+        <ul className="actions">
+            <li>
+              {this.checkIsValid() ? (
+                <input
+                  onClick={this.handleSubmission}
+                  type="submit"
+                  value={"Submit"}
+                  className="submit"
+                />
+              ) : (
+                <div
+                  onClick={() =>
+                    console.log("he tried to submit a disabled form")
+                  }
+                >
+                  <input
+                    disabled
+                    type="submit"
+                    value={"Submit"}
+                    className="submit"
+                  />
+                </div>
+              )}
+            </li>
+            <li>
+              <input onClick={this.reset} type="reset" value="Reset" />
+            </li>
+          </ul>
+
+      </form>
+
+
+
+
+
+
+
       </>
     );
   }
 }
+
+function Step1(props) {
+  let fieldErrors=props.fieldErrors
+  let name=props.name
+  let email=props.email
+  let values=props.values
+  let handleBlur=props.handleBlur
+  let handleChange=props.handleChange
+  if (props.currentStep !== 1) {
+    return null
+  } 
+  return(
+    // <div className="form-group">
+    //   <label htmlFor="email">Email address</label>
+    //   <input
+    //     className="form-control"
+    //     id="email"
+    //     name="email"
+    //     type="text"
+    //     placeholder="Enter email"
+    //     value={props.email}
+    //     onChange={props.handleChange}
+    //     />
+    // </div>
+
+
+  <>
+    <div className="field half first">
+              <label
+                // style={fieldErrors.name.length > 0 ? errorStyle : {}}
+                style={
+                  fieldErrors.name.length > 0 ||
+                  values.name.length < 1
+                    ? {}
+                    : successStyle
+                }
+                htmlFor="name"
+              >
+                Full Name
+                {name !== "" && fieldErrors.name.length < 1 ? (
+                  <span style={successStyle}>✔</span>
+                ) : null}
+              </label>
+              <input
+              //will need to fix this later
+                // ref={this.textInput}
+                // autoFocus
+                // onFocus={(e) => this.focusHandler(e)}
+                onBlur={handleBlur}
+                value={name}
+                onChange={handleChange}
+                type="text"
+                name="name"
+                id="name"
+                style={
+                  fieldErrors.name.length > 0 ||
+                  values.name.length < 1
+                    ? {}
+                    : successBorder
+                }
+              />
+              <div className="error-msg">
+                {fieldErrors.name.length > 0 ? fieldErrors.name : "full name"}
+              </div>
+            </div>
+            <div className="field half">
+              <label
+                style={
+                  fieldErrors.email.length > 0 ||
+                  values.email.length < 1
+                    ? {}
+                    : successStyle
+                }
+                htmlFor="email"
+              >
+                Email
+                {email !== "" && fieldErrors.email.length < 1 ? (
+                  <span style={successStyle}>✔</span>
+                ) : null}
+              </label>
+              <input
+                // onFocus={(e) => this.focusHandler(e)}
+                onBlur={handleBlur}
+                value={email}
+                onChange={handleChange}
+                type="text"
+                name="email"
+                id="email"
+                style={
+                  fieldErrors.email.length > 0 ||
+                  values.email.length < 1
+                    ? {}
+                    : successBorder
+                }
+              />
+              <div className="error-msg">
+                {fieldErrors.email.length > 0
+                  ? fieldErrors.email
+                  : "valid email"}
+              </div>
+            </div>
+        </>
+  );
+}
+
+function Step2(props) {
+  let fieldErrors=props.fieldErrors
+  let message=props.message
+  let values=props.values
+  let handleBlur=props.handleBlur
+  let handleChange=props.handleChange
+
+  if (props.currentStep !== 2) {
+    return null
+  } 
+  return(
+    // <div className="form-group">
+    //   <label htmlFor="username">Username</label>
+    //   <input
+    //     className="form-control"
+    //     id="username"
+    //     name="username"
+    //     type="text"
+    //     placeholder="Enter username"
+    //     value={props.username}
+    //     onChange={props.handleChange}
+    //     />
+    // </div>
+
+  <>
+    <div className="field">
+      <label
+        style={
+          fieldErrors.message.length > 0 ||
+          values.message.length < 1
+            ? {}
+            : successStyle
+        }
+        htmlFor="message"
+      >
+        Message
+        {message !== "" && fieldErrors.message.length < 1 ? (
+          <span style={successStyle}>✔</span>
+        ) : null}
+      </label>
+      <Select/>
+    </div>
+    <div className="field">
+    <label
+      style={
+        fieldErrors.message.length > 0 ||
+        values.message.length < 1
+          ? {}
+          : successStyle
+      }
+      htmlFor="message"
+    >
+      Message
+      {message !== "" && fieldErrors.message.length < 1 ? (
+        <span style={successStyle}>✔</span>
+      ) : null}
+    </label>
+    <textarea
+      // onFocus={(e) => this.focusHandler(e)}
+      onBlur={handleBlur}
+      value={message}
+      onChange={handleChange}
+      name="message"
+      id="message"
+      rows="4"
+      style={
+        fieldErrors.message.length > 0 ||
+        values.message.length < 1
+          ? {}
+          : successBorder
+      }
+    ></textarea>
+    <div className={"error-msg"}>
+      {fieldErrors.message.length > 0
+        ? fieldErrors.message
+        : "project description"}
+    </div>
+  </div>
+</>
+
+  );
+}
+
+function Step3(props) {
+  if (props.currentStep !== 3) {
+    return null
+  } 
+  return(
+    <React.Fragment>
+    <div className="form-group">
+      <label htmlFor="password">Password</label>
+      <input
+        className="form-control"
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Enter password"
+        value={props.password}
+        onChange={props.handleChange}
+        />      
+    </div>
+    <button className="btn btn-success btn-block">Sign up</button>
+    {/* <PhoneNumber/> */}
+    <PaymentForm/>
+    </React.Fragment>
+  );
+}
+
 export default MailForm;
