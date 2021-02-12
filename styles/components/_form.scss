@@ -326,13 +326,13 @@
 		transition: background-color 4s ease;
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
 		transform: scale(1);
-		animation: pulse 3s infinite;
+		animation: pulse 3s 5;
 	}
 	
 	@keyframes pulse {
 		0% {
 			transform: scale(0.95);
-			box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+			box-shadow: 0 0 0 0 rgba(104, 207, 238, 0.7);
 		}
 	
 		70% {
@@ -342,7 +342,8 @@
 	
 		100% {
 			transform: scale(0.95);
-			box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+			box-shadow: 0 0 0 0 rgba(163, 243, 174, 0.904);
+			background: rgb(92, 43, 226);
 		}
 	}
 	  

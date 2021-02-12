@@ -4,24 +4,25 @@ import makeAnimated from 'react-select/animated';
  
 
 
-const colourOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-    { value: 'green', label: 'Green' },
-    { value: 'blue', label: 'Blue' },
-    { value: 'red', label: 'Red' }
+const devOptions = [
+    { value: 'marketing', label: 'Marketing' },
+    { value: 'design', label: 'Design' },
+    { value: 'seo', label: 'SEO' },
+    { value: 'php', label: 'PHP' },
+    { value: 'node js', label: 'Node Js' }
   ]
 const animatedComponents = makeAnimated();
 
-export default function AnimatedMulti() {
+export default function AnimatedMulti(props) {
+  console.log(props, 'select props')
+
   return (
     <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
-      defaultValue={[colourOptions[4], colourOptions[5]]}
+      defaultValue={[props.categories[0], props.categories[1]]}
       isMulti
-      options={colourOptions}
+      options={devOptions}
     />
   );
 }
