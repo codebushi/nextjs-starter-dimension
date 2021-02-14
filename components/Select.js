@@ -12,11 +12,11 @@ const customStyles = {
     color: state.isSelected ? 'red' : 'blue',
     padding: 20,
   }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
-    return { ...provided, opacity, transition };
-  }
+  // singleValue: (provided, state) => {
+  //   const opacity = state.isDisabled ? 0.5 : 1;
+  //   const transition = 'opacity 300ms';
+  //   return { ...provided, opacity, transition };
+  // }
 }
 
 
@@ -31,7 +31,7 @@ const AnimatedMulti =({filterOptions, handleMultiChange, multiValue, setSelectEr
         autoFocus
         styles={customStyles}
         name="Categories"
-        placeholder="Project Categories"
+        placeholder="Select a project category"
         closeMenuOnSelect={false}
         components={animatedComponents}
         isMulti

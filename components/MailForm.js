@@ -349,7 +349,7 @@ class MailForm extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ currentStep: 1 });
+    this.setState({ currentStep: 4 });
     let filterOptions = [
       { value: "marketing", label: "Marketing" },
       { value: "design", label: "Design" },
@@ -406,32 +406,32 @@ class MailForm extends React.Component {
             <li>
               <a className={`step_bubbles ${this.state.currentStep?'done':''}`} href="#step-1">
                 <span className="step_no">1</span>
-                <span className="step_descr">
-                  {this.state.currentStep!==1?'Complete':'Name'}<br />
+                <span style={this.state.currentStep===1?{color:'white'}:null} className="step_descr">
+                  Name<br />
                 </span>
               </a>
             </li>
             <li>
               <a className={`step_bubbles ${this.state.currentStep>1?'done':''}`} href="#step-2">
                 <span className="step_no">2</span>
-                <span className="step_descr">
-                {this.state.currentStep>2?'Complete':'Details'}<br />
+                <span style={this.state.currentStep===2?{color:'white'}:null} className="step_descr">
+                Details<br />
                 </span>
               </a>
             </li>
             <li>
               <a className={`step_bubbles ${this.state.currentStep>2?'done':''}`}  href="#step-3">
                 <span className="step_no">3</span>
-                <span className="step_descr">
-                {this.state.currentStep>3?'Complete':'Phone'}<br />
+                <span style={this.state.currentStep===3?{color:'white'}:null}className="step_descr">
+                Phone<br />
                 </span>
               </a>
             </li>
             <li>
-              <a className="step_bubbles" href="#step-4">
+              <a className={`step_bubbles ${this.state.currentStep>3?'done':''}`} href="#step-4">
                 <span className="step_no">4</span>
-                <span className="step_descr">
-                  Step 4<br />
+                <span style={this.state.currentStep===4?{color:'white'}:null}className="step_descr">
+                  Finish<br />
                 </span>
               </a>
             </li>
@@ -463,6 +463,8 @@ class MailForm extends React.Component {
               message={message}
             />
             <Step3 isPossiblePhone={this.state.isPossiblePhone} phoneNumber={this.state.phone} handleOnPhoneChange={this.handleOnPhoneChange} currentStep={this.state.currentStep} />
+
+            <Step4 currentStep={this.state.currentStep}/>
           </div>
           <div className="action-buttons">
             <ul className="actions">
@@ -624,7 +626,8 @@ function Step2(props) {
           htmlFor="categories"
         >
           Project Categories
-          <span className={"error-msg"}>
+          {/* <span className={"error-msg"}> */}
+          <span className={""}>
             {selectBoxError == undefined ? (
               "- choose a category"
             ) : selectBoxError && multiValue.length < 1 ? (
@@ -657,7 +660,8 @@ function Step2(props) {
             <span style={successStyle}>✔</span>
           ) : null}{" "}
           -{" "}
-          <span className={"error-msg"}>
+          {/* <span className={"error-msg"}> */}
+          <span className={""}>
             {message !== "" && fieldErrors.message.length > 0
               ? fieldErrors.message
               : "project description"}
@@ -696,6 +700,26 @@ function Step3(props) {
           Phone number {props.isPossiblePhone?'is good ✔':'- enter a valid number'}
         </label>
     <PhoneNumber phone={props.phoneNumber} handleOnPhoneChange={props.handleOnPhoneChange}/>
+    </div>
+  );
+}
+
+
+function Step4(props) {
+  if (props.currentStep !== 4) {
+    return null;
+  }
+  return (
+    <div className="field">
+    {/* <label
+          style={!props.isPossiblePhone || props.phoneNumber.length < 1 ? {} : successStyle}
+          htmlFor="categories"
+          htmlFor="phone number"
+        >
+          Phone number {props.isPossiblePhone?'is good ✔':'- enter a valid number'}
+        </label> */}
+    {/* <PhoneNumber phone={props.phoneNumber} handleOnPhoneChange={props.handleOnPhoneChange}/> */}
+    <PaymentForm/>
     </div>
   );
 }

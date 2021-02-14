@@ -6,7 +6,7 @@
 // @import 'react-phone-input-2/lib/style.css';
 @import 'react-phone-input-2/lib/bootstrap.css';
 // @import 'react-phone-input-2/lib/high-res.css';
-// @import 'react-credit-cards/lib/styles.scss';
+@import 'react-credit-cards/lib/styles.scss';
 
 /* Form */
 
@@ -329,8 +329,28 @@
 		color: #fff;
 		transition: background-color 3s;
 		transition-timing-function: ease-in-out;
+		transform: scale(1);
+		animation: pulse-out 1.5s 1;
 		// transition-timing-function: cubic-bezier(0, 0, 0.58, 1);
 	  }
+
+	  @keyframes pulse-out {
+		0% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgba(104, 207, 238, 0.7);
+		}
+	
+		70% {
+			transform: scale(.75);
+			box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+		}
+	
+		100% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgba(163, 243, 174, 0.904);
+			background: #455463;
+		}
+	}
 	  
 	  .wizard_horizontal ul.wizard_steps li a.done:before, .wizard_horizontal ul.wizard_steps li a.done .step_no {
 		background: #1ABB9C;
@@ -338,7 +358,7 @@
 		transition: background-color 4s ease;
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
 		transform: scale(1);
-		animation: pulse 2.5s 3;
+		animation: pulse 2.5s 2;
 	}
 	
 	@keyframes pulse {
@@ -397,3 +417,34 @@
 		height: 45px;
 		width: -webkit-fill-available!important;
 	}
+
+	@media only screen and (max-width: 340px) {
+		.rccs__card--front, .rccs__card--back {
+			left: -2vw;
+			width: 97%;
+			height: 97%;
+		}
+	 }
+
+	@media only screen and (max-width: 330px) {
+		.rccs__card--front, .rccs__card--back {
+			left: -3vw;
+			width: 95%;
+			height: 95%;
+		}
+	  }
+	
+	  .payment-inputs {
+		margin: 30px auto 0;
+		// max-width: 400px;
+		outline: 0;
+	  }
+
+	  .payment-inputs input{
+		border-width: 0 0 1px;
+		border-color: #2e63cc;
+	  }
+
+	  .payment-inputs input.credit-cvc{
+		margin-top: 10px;
+	  }
