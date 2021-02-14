@@ -209,13 +209,17 @@ class MailForm extends React.Component {
       }));
     }
     if(currentStep===2){
-      this.setState({categories:[]})
+      // this.setState({categories:[]})
+      // this.setState({initialCategories:[]})
+      console.log('step is 2')
       this.setState((prevState) => ({
         values: {
           ...prevState.values,
           message: '',
         },
       }));
+      this.setState({multiValue:[]})
+
     }
 
     
@@ -337,15 +341,46 @@ class MailForm extends React.Component {
   }
 
   componentDidMount() {
-    let first={ value: 'front end development', label: 'Front End' }
-    let second={ value: 'full stack development', label: 'Full Stack' }
-
+    // let first={ value: 'front end development', label: 'Front End' }
+    // let second={ value: 'full stack development', label: 'Full Stack' }
+    // let rest=[{ value: 'marketing', label: 'Marketing' },
+    // { value: 'design', label: 'Design' },
+    // { value: 'seo', label: 'SEO' },
+    // { value: 'php', label: 'PHP' },
+    // { value: 'node js', label: 'Node Js' }]
 
     this.setState({currentStep: 1 });
-    this.setState({categories:[first, second]})
+    // this.setState({initialCategories:[first,second]})
+    // this.setState({categories:[first, second, ...rest]})
+
+
+
+    let filterOptions= [
+      { value: "marketing", label: "Marketing" },
+      { value: "design", label: "Design" },
+      { value: "seo", label: "SEO" },
+      { value: "php", label: "PHP" },
+      { value: "node js", label: "Node Js" },
+    ]
+    this.setState({filterOptions:filterOptions})
+    this.setState({multiValue:[]})
+  }
+  
+  // removeandSetCat=(catIdx)=>{
+
+  // }
+
+
+  handleMultiChange=(option)=> {
+    this.setState((state) => {
+      return {
+        multiValue: option,
+      };
+    });
   }
 
   render() {
+    // console.log(this.state.categories,"cats")
     // const theStep = this.state.currentStep;
     const { name, email, message } = this.state.values;
     const { fieldErrors } = this.state;
@@ -403,10 +438,14 @@ class MailForm extends React.Component {
               // email={this.state.email}
             />
             <Step2
-              categories={this.state.categories}
+              // initialCategories={this.state.initialCategories}
+              // categories={this.state.categories}
               currentStep={this.state.currentStep}
               // handleChange={this.handleChange}
               // username={this.state.username}
+              handleMultiChange={this.handleMultiChange}
+              filterOptions={this.state.filterOptions}
+              multiValue={this.state.multiValue}
               fieldErrors={fieldErrors}
               handleChange={this.handleChange}
               values={this.state.values}
@@ -568,7 +607,11 @@ function Step2(props) {
             <span style={successStyle}>✔</span>
           ) : null}
         </label>
-        <Select categories={props.categories}/>
+        {/* <Select categories={props.categories} initial={[props.initialCategories]}/> */}
+        <Select 
+        handleMultiChange={props.handleMultiChange}
+        filterOptions={props.filterOptions}
+         multiValue={props.multiValue}/>
       </div>
       <div className="field">
         <label
