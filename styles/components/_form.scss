@@ -4,9 +4,9 @@
 /// Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 ///
 // @import 'react-phone-input-2/lib/style.css';
-// @import 'react-phone-input-2/lib/bootstrap.css';
-@import 'react-phone-input-2/lib/high-res.css';
-@import 'react-credit-cards/lib/styles.scss';
+@import 'react-phone-input-2/lib/bootstrap.css';
+// @import 'react-phone-input-2/lib/high-res.css';
+// @import 'react-credit-cards/lib/styles.scss';
 
 /* Form */
 
@@ -328,7 +328,7 @@
 		background: #455463;
 		color: #fff;
 		transition: background-color 3s;
-		transition-timing-function: ease-out;
+		transition-timing-function: ease-in-out;
 		// transition-timing-function: cubic-bezier(0, 0, 0.58, 1);
 	  }
 	  
@@ -391,4 +391,9 @@
 		// display: inline-block;
 		padding: 1rem 1rem 0 0 !important;
 		// vertical-align: middle;
+	}
+
+	.react-tel-input .form-control{
+		height: 45px;
+		width: -webkit-fill-available!important;
 	}
