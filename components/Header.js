@@ -34,8 +34,8 @@ const Header = (props) => (
         <div className="content">
             <div className="inner">
                 <h1>Marketing, Design, Coding</h1>
-                <h2>{!props.draw?People['header']:Abe['header']}</h2>
-                <p>{!props.draw?People['p']:Abe['p']}</p>
+                <h2>{!props.draw&&!props.isArticleVisible?People['header']:Abe['header']}</h2>
+                <p>{!props.draw&&!props.isArticleVisible?People['p']:Abe['p']}</p>
             </div>
         </div>
         <nav>

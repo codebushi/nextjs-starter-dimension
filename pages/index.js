@@ -118,6 +118,7 @@ class IndexPage extends React.Component {
             <Icon draw={this.draw} isDrawing={this.state.isDrawing} />
 
             <Header
+              isArticleVisible={this.state.isArticleVisible}
               draw={this.state.isDrawing}
               isDrawing={this.draw}
               onOpenArticle={this.handleOpenArticle}
