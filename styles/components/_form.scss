@@ -327,6 +327,9 @@
 	  .wizard_horizontal ul.wizard_steps li a.selected:before, .step_no {
 		background: #455463;
 		color: #fff;
+		transition: background-color 3s;
+		transition-timing-function: ease-out;
+		// transition-timing-function: cubic-bezier(0, 0, 0.58, 1);
 	  }
 	  
 	  .wizard_horizontal ul.wizard_steps li a.done:before, .wizard_horizontal ul.wizard_steps li a.done .step_no {
@@ -335,7 +338,7 @@
 		transition: background-color 4s ease;
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
 		transform: scale(1);
-		animation: pulse 3s 5;
+		animation: pulse 2.5s 3;
 	}
 	
 	@keyframes pulse {
@@ -345,7 +348,7 @@
 		}
 	
 		70% {
-			transform: scale(1);
+			transform: scale(1.3);
 			box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
 		}
 	

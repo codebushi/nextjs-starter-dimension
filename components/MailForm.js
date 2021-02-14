@@ -11,9 +11,6 @@ const bounce = cssTransition({
   exit: "animate__animated animate__zoomOut",
 });
 
-const errorStyle = {
-  color: "orangered",
-};
 const successStyle = {
   color: "rgb(156 205 247)",
 };
@@ -21,10 +18,6 @@ const successBorder = {
   border: "5px solid rgb(156 205 247)",
   background: "#E8F0F0",
   color: "black",
-};
-
-const errorBorder = {
-  border: "solid orangered",
 };
 
 const nameLength = 3;
@@ -215,7 +208,7 @@ class MailForm extends React.Component {
         },
       }));
       this.setState({ multiValue: [] });
-      this.setState({selectBoxError:true})
+      this.setState({ selectBoxError: true });
     }
 
     // this.setState(InitialData);
@@ -302,7 +295,11 @@ class MailForm extends React.Component {
       return false;
     }
     if (step === 2) {
-      if (message.length === 0 || this.state.selectBoxError || this.state.multiValue.length<1) {
+      if (
+        message.length === 0 ||
+        this.state.selectBoxError ||
+        this.state.multiValue.length < 1
+      ) {
         return true;
       }
       {
@@ -320,21 +317,11 @@ class MailForm extends React.Component {
     if (currentStep < 3) {
       return (
         <li>
-          {/* <input
-            className="btn btn-primary"
-            type="button"
-            onClick={this._next}
-            // disabled
-            value="Next"
-            disabled={this.runStepProp(currentStep)}
-          /> */}
-
           <button
             className="btn btn-secondary"
             type="button"
             onClick={this._next}
             disabled={this.runStepProp(currentStep)}
-
           >
             Next
           </button>
@@ -357,13 +344,13 @@ class MailForm extends React.Component {
     this.setState({ multiValue: [] });
   }
 
-  checkMulti = () =>{
-    if(this.state.multiValue.length<1){
-      this.setSelectError()
+  checkMulti = () => {
+    if (this.state.multiValue.length < 1) {
+      this.setSelectError();
     } else {
-      this.setState({selectBoxError:false})
+      this.setState({ selectBoxError: false });
     }
-  }
+  };
 
   handleMultiChange = (option) => {
     this.setState((state) => {
@@ -373,12 +360,11 @@ class MailForm extends React.Component {
     }, this.checkMulti);
     // console.log('handleMultiCalled')
     // console.log(this.state.multiValue)
-
   };
 
-  setSelectError = () =>{
-    this.setState({selectBoxError:true})
-  }
+  setSelectError = () => {
+    this.setState({ selectBoxError: true });
+  };
 
   render() {
     // console.log(this.state.categories,"cats")
@@ -392,18 +378,18 @@ class MailForm extends React.Component {
         <div className="wizard_horizontal">
           <ul className="wizard_steps">
             <li>
-              <a className="step_bubbles" href="#step-1">
+              <a className={`step_bubbles ${this.state.currentStep?'done':''}`} href="#step-1">
                 <span className="step_no">1</span>
                 <span className="step_descr">
-                  Step 1<br />
+                  {this.state.currentStep!==1?'Complete':'Step 1'}<br />
                 </span>
               </a>
             </li>
             <li>
-              <a className="step_bubbles" href="#step-2">
+              <a className={`step_bubbles ${this.state.currentStep>1?'done':''}`} href="#step-2">
                 <span className="step_no">2</span>
                 <span className="step_descr">
-                  Step 2<br />
+                {this.state.currentStep!==1?'Complete':'Step 1'}<br />
                 </span>
               </a>
             </li>
@@ -454,7 +440,6 @@ class MailForm extends React.Component {
           </div>
           <div className="action-buttons">
             <ul className="actions">
-         
               <li>
                 <input onClick={this.reset} type="reset" value="Reset" />
               </li>
@@ -589,7 +574,18 @@ function Step2(props) {
   // let handleChange = props.handleChange;
   // let selectBoxError = props.selectBoxError
   // let multiValue = props.multiValue
-  let {multiValue,selectBoxError, handleChange, handleBlur, values, message, fieldErrors, setSelectError, handleMultiChange, filterOptions} = props
+  let {
+    multiValue,
+    selectBoxError,
+    handleChange,
+    handleBlur,
+    values,
+    message,
+    fieldErrors,
+    setSelectError,
+    handleMultiChange,
+    filterOptions,
+  } = props;
   if (props.currentStep !== 2) {
     return null;
   }
@@ -598,18 +594,21 @@ function Step2(props) {
     <>
       <div className="field">
         <label
-          style={
-            selectBoxError || multiValue.length < 1
-              ? {}
-              : successStyle
-          }
+          style={selectBoxError || multiValue.length < 1 ? {} : successStyle}
           htmlFor="categories"
         >
           Project Categories
           <span className={"error-msg"}>
-          {selectBoxError==undefined?'- choose a category':selectBoxError && multiValue.length < 1?'- at least one project category': <span style={successStyle}>{`- ${multiValue.length} selected ✔`}</span>}
+            {selectBoxError == undefined ? (
+              "- choose a category"
+            ) : selectBoxError && multiValue.length < 1 ? (
+              "- pick at least one project category"
+            ) : (
+              <span
+                style={successStyle}
+              >{`- ${multiValue.length} selected ✔`}</span>
+            )}
           </span>
- 
         </label>
         <Select
           setSelectError={setSelectError}
@@ -662,24 +661,10 @@ function Step3(props) {
     return null;
   }
   return (
-   
-    //   <div className="form-group">
-    //     <label htmlFor="password">Password</label>
-    //     <input
-    //       className="form-control"
-    //       id="password"
-    //       name="password"
-    //       type="password"
-    //       placeholder="Enter password"
-    //       value={props.password}
-    //       onChange={props.handleChange}
-    //     />
-    //   </div>
-    //   <button className="btn btn-success btn-block">Sign up</button>
     <>
-      <PhoneNumber/> 
+      <PhoneNumber />
       <PaymentForm />
-      </>
+    </>
   );
 }
 
