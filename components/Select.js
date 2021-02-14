@@ -8,7 +8,7 @@ const animatedComponents = makeAnimated();
 const customStyles = {
   option: (provided, state) => ({
     ...provided,
-    borderBottom: '1px dotted aqua',
+    borderBottom: '1px dotted purple',
     color: state.isSelected ? 'red' : 'blue',
     padding: 20,
   }),
@@ -20,7 +20,12 @@ const customStyles = {
 }
 
 
-const AnimatedMulti =({filterOptions, handleMultiChange, multiValue})=> {
+const AnimatedMulti =({filterOptions, handleMultiChange, multiValue, setSelectError})=> {
+  const onBlur=()=>{
+    if(multiValue.length===0){
+      setSelectError()
+    }
+  }
     return (
       <Select
         autoFocus
@@ -33,6 +38,7 @@ const AnimatedMulti =({filterOptions, handleMultiChange, multiValue})=> {
         options={filterOptions}
         onChange={handleMultiChange}
         value={multiValue}
+        onBlur={onBlur}
       />
     );
 }

@@ -27,12 +27,12 @@ const errorBorder = {
   border: "solid orangered",
 };
 
-const nameLength = 5;
+const nameLength = 3;
 const msgLength = 40;
 
 const InitialData = {
   // currentStep: 1,
-  categories:[],
+  // categories: [],
   values: {
     name: "",
     email: "",
@@ -135,9 +135,7 @@ class MailForm extends React.Component {
           this.setState((prevState) => ({
             fieldErrors: {
               ...prevState.fieldErrors,
-              name: `name must be ${nameLength} chars long! ${
-                value.length - nameLength
-              } left`,
+              name: `Too Short! ${value.length - nameLength} left`,
             },
           }));
         } else {
@@ -154,7 +152,7 @@ class MailForm extends React.Component {
           this.setState((prevState) => ({
             fieldErrors: {
               ...prevState.fieldErrors,
-              email: "email is not valid!",
+              email: "is not valid!",
             },
           }));
         } else {
@@ -171,7 +169,7 @@ class MailForm extends React.Component {
           this.setState((prevState) => ({
             fieldErrors: {
               ...prevState.fieldErrors,
-              message: `project description must be ${msgLength} chars long!  ${
+              message: `The description is too short, description should be at least ${msgLength} chars long!  ${
                 value.length - msgLength
               } left`,
             },
@@ -196,31 +194,30 @@ class MailForm extends React.Component {
     }));
   };
   reset = () => {
-    console.log(this.state.currentStep,"the currentStep")
+    // console.log(this.state.currentStep, "the currentStep");
     // const { name, email, message } = this.state.values;
-    let currentStep=this.state.currentStep
-    if(currentStep===1){
+    let currentStep = this.state.currentStep;
+    if (currentStep === 1) {
       this.setState((prevState) => ({
         values: {
           ...prevState.values,
-          name: '',
-          email:''
+          name: "",
+          email: "",
         },
       }));
     }
-    if(currentStep===2){
-      console.log('step is 2')
+    if (currentStep === 2) {
+      // console.log("step is 2");
       this.setState((prevState) => ({
         values: {
           ...prevState.values,
-          message: '',
+          message: "",
         },
       }));
-      this.setState({multiValue:[]})
-
+      this.setState({ multiValue: [] });
+      this.setState({selectBoxError:true})
     }
 
-    
     // this.setState(InitialData);
     // this.textInput.current.focus();
   };
@@ -304,18 +301,18 @@ class MailForm extends React.Component {
       }
       return false;
     }
-   if(step===2){
-    if (message.length === 0) {
-      return true;
-    }
-    {
-      let { message } = this.state.fieldErrors;
-      if (message.length > 0) {
+    if (step === 2) {
+      if (message.length === 0 || this.state.selectBoxError || this.state.multiValue.length<1) {
         return true;
       }
+      {
+        let { message } = this.state.fieldErrors;
+        if (message.length > 0) {
+          return true;
+        }
+      }
+      return false;
     }
-    return false;
-   }   
   }
 
   nextButton() {
@@ -323,12 +320,21 @@ class MailForm extends React.Component {
     if (currentStep < 3) {
       return (
         <li>
-          <button
-            className="btn btn-primary float-right"
+          {/* <input
+            className="btn btn-primary"
             type="button"
             onClick={this._next}
             // disabled
+            value="Next"
             disabled={this.runStepProp(currentStep)}
+          /> */}
+
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={this._next}
+            disabled={this.runStepProp(currentStep)}
+
           >
             Next
           </button>
@@ -339,24 +345,39 @@ class MailForm extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({currentStep: 1 });
-    let filterOptions= [
+    this.setState({ currentStep: 1 });
+    let filterOptions = [
       { value: "marketing", label: "Marketing" },
       { value: "design", label: "Design" },
       { value: "seo", label: "SEO" },
       { value: "php", label: "PHP" },
       { value: "node js", label: "Node Js" },
-    ]
-    this.setState({filterOptions})
-    this.setState({multiValue:[]})
+    ];
+    this.setState({ filterOptions });
+    this.setState({ multiValue: [] });
   }
 
-  handleMultiChange=(option)=> {
+  checkMulti = () =>{
+    if(this.state.multiValue.length<1){
+      this.setSelectError()
+    } else {
+      this.setState({selectBoxError:false})
+    }
+  }
+
+  handleMultiChange = (option) => {
     this.setState((state) => {
       return {
         multiValue: option,
       };
-    });
+    }, this.checkMulti);
+    // console.log('handleMultiCalled')
+    // console.log(this.state.multiValue)
+
+  };
+
+  setSelectError = () =>{
+    this.setState({selectBoxError:true})
   }
 
   render() {
@@ -417,6 +438,8 @@ class MailForm extends React.Component {
               handleBlur={this.handleBlur}
             />
             <Step2
+              selectBoxError={this.state.selectBoxError}
+              setSelectError={this.setSelectError}
               currentStep={this.state.currentStep}
               handleMultiChange={this.handleMultiChange}
               filterOptions={this.state.filterOptions}
@@ -427,12 +450,17 @@ class MailForm extends React.Component {
               handleBlur={this.handleBlur}
               message={message}
             />
-            <Step3
-              currentStep={this.state.currentStep}
-            />
+            <Step3 currentStep={this.state.currentStep} />
           </div>
-          <div className="action buttons">
+          <div className="action-buttons">
             <ul className="actions">
+         
+              <li>
+                <input onClick={this.reset} type="reset" value="Reset" />
+              </li>
+              {this.previousButton()}
+              {this.nextButton()}
+
               <li>
                 {this.checkIsValid() ? (
                   <input
@@ -456,11 +484,6 @@ class MailForm extends React.Component {
                   </div>
                 )}
               </li>
-              <li>
-                <input onClick={this.reset} type="reset" value="Reset" />
-              </li>
-              {this.previousButton()}
-              {this.nextButton()}
             </ul>
           </div>
         </form>
@@ -481,7 +504,7 @@ function Step1(props) {
   }
   return (
     <>
-      <div className="field half first">
+      <div className="field half first first-page">
         <label
           style={
             fieldErrors.name.length > 0 || values.name.length < 1
@@ -493,7 +516,13 @@ function Step1(props) {
           Full Name
           {name !== "" && fieldErrors.name.length < 1 ? (
             <span style={successStyle}>✔</span>
-          ) : null}
+          ) : null}{" "}
+          -{" "}
+          <span className="error-msg">
+            {name !== "" && fieldErrors.name.length > 0
+              ? fieldErrors.name
+              : "full name"}
+          </span>
         </label>
         <input
           //will need to fix this later
@@ -512,11 +541,8 @@ function Step1(props) {
               : successBorder
           }
         />
-        <div className="error-msg">
-          {fieldErrors.name.length > 0 ? fieldErrors.name : "full name"}
-        </div>
       </div>
-      <div className="field half">
+      <div className="field half first-page">
         <label
           style={
             fieldErrors.email.length > 0 || values.email.length < 1
@@ -528,7 +554,13 @@ function Step1(props) {
           Email
           {email !== "" && fieldErrors.email.length < 1 ? (
             <span style={successStyle}>✔</span>
-          ) : null}
+          ) : null}{" "}
+          -{" "}
+          <span className="error-msg">
+            {email !== "" && fieldErrors.email.length > 0
+              ? fieldErrors.email
+              : "valid email"}
+          </span>
         </label>
         <input
           // onFocus={(e) => this.focusHandler(e)}
@@ -544,45 +576,47 @@ function Step1(props) {
               : successBorder
           }
         />
-        <div className="error-msg">
-          {fieldErrors.email.length > 0 ? fieldErrors.email : "valid email"}
-        </div>
       </div>
     </>
   );
 }
 
 function Step2(props) {
-  let fieldErrors = props.fieldErrors;
-  let message = props.message;
-  let values = props.values;
-  let handleBlur = props.handleBlur;
-  let handleChange = props.handleChange;
-  let categories = props.categories;
-
+  // let fieldErrors = props.fieldErrors;
+  // let message = props.message;
+  // let values = props.values;
+  // let handleBlur = props.handleBlur;
+  // let handleChange = props.handleChange;
+  // let selectBoxError = props.selectBoxError
+  // let multiValue = props.multiValue
+  let {multiValue,selectBoxError, handleChange, handleBlur, values, message, fieldErrors, setSelectError, handleMultiChange, filterOptions} = props
   if (props.currentStep !== 2) {
     return null;
   }
+
   return (
     <>
       <div className="field">
         <label
           style={
-            fieldErrors.message.length > 0 || values.message.length < 1
+            selectBoxError || multiValue.length < 1
               ? {}
               : successStyle
           }
-          htmlFor="message"
+          htmlFor="categories"
         >
           Project Categories
-          {message !== "" && fieldErrors.message.length < 1 ? (
-            <span style={successStyle}>✔</span>
-          ) : null}
+          <span className={"error-msg"}>
+          {selectBoxError==undefined?'- choose a category':selectBoxError && multiValue.length < 1?'- at least one project category': <span style={successStyle}>{`- ${multiValue.length} selected ✔`}</span>}
+          </span>
+ 
         </label>
-        <Select 
-        handleMultiChange={props.handleMultiChange}
-        filterOptions={props.filterOptions}
-         multiValue={props.multiValue}/>
+        <Select
+          setSelectError={setSelectError}
+          handleMultiChange={handleMultiChange}
+          filterOptions={filterOptions}
+          multiValue={multiValue}
+        />
       </div>
       <div className="field">
         <label
@@ -591,12 +625,18 @@ function Step2(props) {
               ? {}
               : successStyle
           }
-          htmlFor="message"
+          htmlFor="project description"
         >
-          Message
+          Project description
           {message !== "" && fieldErrors.message.length < 1 ? (
             <span style={successStyle}>✔</span>
-          ) : null}
+          ) : null}{" "}
+          -{" "}
+          <span className={"error-msg"}>
+            {message !== "" && fieldErrors.message.length > 0
+              ? fieldErrors.message
+              : "project description"}
+          </span>
         </label>
         <textarea
           // onFocus={(e) => this.focusHandler(e)}
@@ -612,11 +652,6 @@ function Step2(props) {
               : successBorder
           }
         ></textarea>
-        <div className={"error-msg"}>
-          {fieldErrors.message.length > 0
-            ? fieldErrors.message
-            : "project description"}
-        </div>
       </div>
     </>
   );
@@ -627,23 +662,24 @@ function Step3(props) {
     return null;
   }
   return (
-    <React.Fragment>
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          className="form-control"
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter password"
-          value={props.password}
-          onChange={props.handleChange}
-        />
-      </div>
-      <button className="btn btn-success btn-block">Sign up</button>
-      {/* <PhoneNumber/> */}
+   
+    //   <div className="form-group">
+    //     <label htmlFor="password">Password</label>
+    //     <input
+    //       className="form-control"
+    //       id="password"
+    //       name="password"
+    //       type="password"
+    //       placeholder="Enter password"
+    //       value={props.password}
+    //       onChange={props.handleChange}
+    //     />
+    //   </div>
+    //   <button className="btn btn-success btn-block">Sign up</button>
+    <>
+      <PhoneNumber/> 
       <PaymentForm />
-    </React.Fragment>
+      </>
   );
 }
 

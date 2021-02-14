@@ -123,6 +123,15 @@
 		}
 	}
 
+	@media  screen and (max-width:575px) and (min-width:470px) {
+		div.first-page {
+			display:flex;
+		}
+		ul.actions{
+			display:inline-block;
+		}
+	}​
+
 	.select-wrapper {
 		@include icon;
 		display: block;
@@ -366,4 +375,17 @@
 	.wizard_horizontal ul.wizard_steps li{
 		padding: 0px!important;
 		// display: none!important;
+	}
+
+	@media only screen and (max-width: 470px) {
+		ul.actions{
+			margin-top: 30px!important;
+		}
+	  }
+
+
+	  ul.actions li {
+		// display: inline-block;
+		padding: 1rem 1rem 0 0 !important;
+		// vertical-align: middle;
 	}

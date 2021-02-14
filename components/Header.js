@@ -35,9 +35,6 @@ const Header = (props) => (
             <div className="inner">
                 <h1>Marketing, Design, Coding</h1>
                 <h2>{!props.draw?People['header']:Abe['header']}</h2>
-                {/* {props.draw?(<p>"People <a href="https://www.freecodecamp.org/news/how-i-changed-careers-and-landed-a-job-as-a-developer-in-six-months-d5cc5f7c19f6/">Land a job as a developer in 6 months</a>
-                from knowing only rudimentary things about JavaScript and CSS to landing a job as a front-end developer 
-              </p>):"H"} */}
                 <p>{!props.draw?People['p']:Abe['p']}</p>
             </div>
         </div>
