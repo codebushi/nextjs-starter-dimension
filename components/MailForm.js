@@ -209,8 +209,6 @@ class MailForm extends React.Component {
       }));
     }
     if(currentStep===2){
-      // this.setState({categories:[]})
-      // this.setState({initialCategories:[]})
       console.log('step is 2')
       this.setState((prevState) => ({
         values: {
@@ -341,20 +339,7 @@ class MailForm extends React.Component {
   }
 
   componentDidMount() {
-    // let first={ value: 'front end development', label: 'Front End' }
-    // let second={ value: 'full stack development', label: 'Full Stack' }
-    // let rest=[{ value: 'marketing', label: 'Marketing' },
-    // { value: 'design', label: 'Design' },
-    // { value: 'seo', label: 'SEO' },
-    // { value: 'php', label: 'PHP' },
-    // { value: 'node js', label: 'Node Js' }]
-
     this.setState({currentStep: 1 });
-    // this.setState({initialCategories:[first,second]})
-    // this.setState({categories:[first, second, ...rest]})
-
-
-
     let filterOptions= [
       { value: "marketing", label: "Marketing" },
       { value: "design", label: "Design" },
@@ -362,14 +347,9 @@ class MailForm extends React.Component {
       { value: "php", label: "PHP" },
       { value: "node js", label: "Node Js" },
     ]
-    this.setState({filterOptions:filterOptions})
+    this.setState({filterOptions})
     this.setState({multiValue:[]})
   }
-  
-  // removeandSetCat=(catIdx)=>{
-
-  // }
-
 
   handleMultiChange=(option)=> {
     this.setState((state) => {
@@ -435,14 +415,9 @@ class MailForm extends React.Component {
               handleChange={this.handleChange}
               values={this.state.values}
               handleBlur={this.handleBlur}
-              // email={this.state.email}
             />
             <Step2
-              // initialCategories={this.state.initialCategories}
-              // categories={this.state.categories}
               currentStep={this.state.currentStep}
-              // handleChange={this.handleChange}
-              // username={this.state.username}
               handleMultiChange={this.handleMultiChange}
               filterOptions={this.state.filterOptions}
               multiValue={this.state.multiValue}
@@ -454,8 +429,6 @@ class MailForm extends React.Component {
             />
             <Step3
               currentStep={this.state.currentStep}
-              // handleChange={this.handleChange}
-              // password={this.state.password}
             />
           </div>
           <div className="action buttons">
@@ -510,7 +483,6 @@ function Step1(props) {
     <>
       <div className="field half first">
         <label
-          // style={fieldErrors.name.length > 0 ? errorStyle : {}}
           style={
             fieldErrors.name.length > 0 || values.name.length < 1
               ? {}
@@ -607,7 +579,6 @@ function Step2(props) {
             <span style={successStyle}>✔</span>
           ) : null}
         </label>
-        {/* <Select categories={props.categories} initial={[props.initialCategories]}/> */}
         <Select 
         handleMultiChange={props.handleMultiChange}
         filterOptions={props.filterOptions}
