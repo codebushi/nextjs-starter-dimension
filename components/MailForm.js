@@ -129,7 +129,7 @@ class MailForm extends React.Component {
           this.setState((prevState) => ({
             fieldErrors: {
               ...prevState.fieldErrors,
-              name: `Too Short! ${value.length - nameLength} left`,
+              name: `${nameLength-value.length} left`,
             },
           }));
         } else {
@@ -236,19 +236,22 @@ class MailForm extends React.Component {
   //     } else return {FormIsOpen: false}
   // }
 
-  // componentDidUpdate(prevProps, nextState) {
-  //   if (!this.props.FormIsOpen && this.state.FormIsOpen) {
-  //     this.setState({ FormIsOpen: false });
-  //   }
-  //   if (
-  //     prevProps.FormIsOpen === true &&
-  //     prevProps.FormIsOpen !== nextState.FormIsOpen
-  //   ) {
-  //     this.setState({ FormIsOpen: true });
-  //     this.textInput.current.focus();
-  //   }
-  //   return null;
-  // }
+  componentDidUpdate(prevProps, nextState) {
+    if (!this.props.FormIsOpen && this.state.FormIsOpen) {
+      this.setState({ FormIsOpen: false });
+    }
+    if (
+      prevProps.FormIsOpen === true &&
+      prevProps.FormIsOpen !== nextState.FormIsOpen
+    ) {
+      this.setState({ FormIsOpen: true });
+      // this.textInput.current.focus();
+    }
+    return null;
+  }
+
+
+
   focusHandler = (e) => {
     console.log(e.target);
   };
@@ -275,7 +278,7 @@ class MailForm extends React.Component {
       return (
         <li>
           <button
-            className="btn btn-secondary"
+            className=""
             type="button"
             onClick={this._prev}
           >
@@ -289,7 +292,7 @@ class MailForm extends React.Component {
   runStepProp(step) {
     let { name, email, message } = this.state.values;
     let {phone, isPossiblePhone} = this.state
-    console.log('phone= ', phone)
+    //console.log('phone= ', phone)
     if (step === 1) {
       if (name.length === 0 || email.length === 0) {
         return true;
@@ -330,12 +333,12 @@ class MailForm extends React.Component {
 
   nextButton() {
     let currentStep = this.state.currentStep;
-    console.log('next run with currentStep: ', currentStep)
+    //console.log('next run with currentStep: ', currentStep)
     if (currentStep < 4) {
       return (
         <li>
           <button
-            className="btn btn-secondary"
+            className=""
             type="button"
             onClick={this._next}
             disabled={this.runStepProp(currentStep)}
@@ -349,7 +352,7 @@ class MailForm extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ currentStep: 4 });
+    this.setState({ currentStep: 1 });
     let filterOptions = [
       { value: "marketing", label: "Marketing" },
       { value: "design", label: "Design" },
@@ -385,12 +388,16 @@ class MailForm extends React.Component {
 
 
   handleOnPhoneChange = (value, countryData) => {
-    console.log(countryData.countryCode, 'countryData')
+    //console.log(countryData.countryCode, 'countryData')
     let pn= new TheNumber( '+'+value, countryData.countryCode );
-    console.log(value, 'value')
+    //console.log(value, 'value')
     let isPossiblePhone=pn.isPossible()
     this.setState({ phone: value, isPossiblePhone});
   };
+
+  setCreditValue = (e) => {
+    console.log(e.target)
+  }
 
   render() {
     // console.log(this.state.categories,"cats")
@@ -400,38 +407,83 @@ class MailForm extends React.Component {
     return (
       <>
         <ToastContainer transition={Zoom} />
-
         <div className="wizard_horizontal">
           <ul className="wizard_steps">
             <li>
-              <a className={`step_bubbles ${this.state.currentStep?'done':''}`} href="#step-1">
-                <span className="step_no">1</span>
-                <span style={this.state.currentStep===1?{color:'white'}:null} className="step_descr">
-                  Name<br />
+              <a className={`step_bubbles`} href="#step-1">
+                <span
+                  className={`step_no ${this.state.currentStep ? "done" : ""}`}
+                >
+                  1
+                </span>
+                <span
+                  style={
+                    this.state.currentStep === 1 ? { color: "white" } : null
+                  }
+                  className="step_descr"
+                >
+                  Name
+                  <br />
                 </span>
               </a>
             </li>
             <li>
-              <a className={`step_bubbles ${this.state.currentStep>1?'done':''}`} href="#step-2">
-                <span className="step_no">2</span>
-                <span style={this.state.currentStep===2?{color:'white'}:null} className="step_descr">
-                Details<br />
+              <a className={`step_bubbles`} href="#step-2">
+                <span
+                  className={`step_no ${
+                    this.state.currentStep > 1 ? "done" : ""
+                  }`}
+                >
+                  2
+                </span>
+                <span
+                  style={
+                    this.state.currentStep === 2 ? { color: "white" } : null
+                  }
+                  className="step_descr"
+                >
+                  Details
+                  <br />
                 </span>
               </a>
             </li>
             <li>
-              <a className={`step_bubbles ${this.state.currentStep>2?'done':''}`}  href="#step-3">
-                <span className="step_no">3</span>
-                <span style={this.state.currentStep===3?{color:'white'}:null}className="step_descr">
-                Phone<br />
+              <a className={`step_bubbles`} href="#step-3">
+                <span
+                  className={`step_no ${
+                    this.state.currentStep > 2 ? "done" : ""
+                  }`}
+                >
+                  3
+                </span>
+                <span
+                  style={
+                    this.state.currentStep === 3 ? { color: "white" } : null
+                  }
+                  className="step_descr"
+                >
+                  Phone
+                  <br />
                 </span>
               </a>
             </li>
             <li>
-              <a className={`step_bubbles ${this.state.currentStep>3?'done':''}`} href="#step-4">
-                <span className="step_no">4</span>
-                <span style={this.state.currentStep===4?{color:'white'}:null}className="step_descr">
-                  Finish<br />
+              <a className={`step_bubbles`} href="#step-4">
+                <span
+                  className={`step_no ${
+                    this.state.currentStep > 3 ? "done" : ""
+                  }`}
+                >
+                  4
+                </span>
+                <span
+                  style={
+                    this.state.currentStep === 4 ? { color: "white" } : null
+                  }
+                  className="step_descr"
+                >
+                  Finish
+                  <br />
                 </span>
               </a>
             </li>
@@ -462,18 +514,39 @@ class MailForm extends React.Component {
               handleBlur={this.handleBlur}
               message={message}
             />
-            <Step3 isPossiblePhone={this.state.isPossiblePhone} phoneNumber={this.state.phone} handleOnPhoneChange={this.handleOnPhoneChange} currentStep={this.state.currentStep} />
+            <Step3
+              isPossiblePhone={this.state.isPossiblePhone}
+              phoneNumber={this.state.phone}
+              handleOnPhoneChange={this.handleOnPhoneChange}
+              currentStep={this.state.currentStep}
+            />
 
-            <Step4 currentStep={this.state.currentStep}/>
+            <Step4
+              setCreditValue={this.setCreditValue}
+              currentStep={this.state.currentStep}
+            />
           </div>
           <div className="action-buttons">
             <ul className="actions">
+            {this.state.currentStep <4 && (
               <li>
-                <input onClick={this.reset} type="reset" value="Reset" />
-              </li>
+                {/* <input onClick={this.reset} type="reset" value="Reset" /> */}
+                <button tabIndex={1} className="" type="button" onClick={this.reset}>
+                  Reset
+                </button>
+              </li> ) }
               {this.previousButton()}
               {this.nextButton()}
-
+              {this.state.currentStep === 4 && (
+                <li>
+                  <button
+                    onClick={this.handleSubmission}
+                    type="submit"
+                    className="submit"
+                  >Submit</button>
+                </li>
+              )}
+              {/* 
               <li>
                 {this.checkIsValid() ? (
                   <input
@@ -497,6 +570,8 @@ class MailForm extends React.Component {
                   </div>
                 )}
               </li>
+            
+             */}
             </ul>
           </div>
         </form>
@@ -537,11 +612,13 @@ function Step1(props) {
               : "full name"}
           </span>
         </label>
+        <div className="field-wrap">
         <input
           //will need to fix this later
           // ref={this.textInput}
           // autoFocus
           // onFocus={(e) => this.focusHandler(e)}
+          // className="field__input"
           onBlur={handleBlur}
           value={name}
           onChange={handleChange}
@@ -554,6 +631,8 @@ function Step1(props) {
               : successBorder
           }
         />
+        <span className="field__counter">{name.length}</span>
+        </div>
       </div>
       <div className="field half first-page">
         <label
@@ -667,6 +746,8 @@ function Step2(props) {
               : "project description"}
           </span>
         </label>
+        <div className="field-wrap">
+        <span className="field__counter message_counter">{message.length}</span>
         <textarea
           // onFocus={(e) => this.focusHandler(e)}
           onBlur={handleBlur}
@@ -681,6 +762,7 @@ function Step2(props) {
               : successBorder
           }
         ></textarea>
+        </div>
       </div>
     </>
   );
@@ -706,20 +788,13 @@ function Step3(props) {
 
 
 function Step4(props) {
-  if (props.currentStep !== 4) {
+  let {currentStep, setCreditValue} = props
+  if (currentStep !== 4) {
     return null;
   }
   return (
     <div className="field">
-    {/* <label
-          style={!props.isPossiblePhone || props.phoneNumber.length < 1 ? {} : successStyle}
-          htmlFor="categories"
-          htmlFor="phone number"
-        >
-          Phone number {props.isPossiblePhone?'is good ✔':'- enter a valid number'}
-        </label> */}
-    {/* <PhoneNumber phone={props.phoneNumber} handleOnPhoneChange={props.handleOnPhoneChange}/> */}
-    <PaymentForm/>
+    <PaymentForm setCreditValue={setCreditValue}/>
     </div>
   );
 }

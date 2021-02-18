@@ -61,6 +61,7 @@ class Main extends React.Component {
           <ul className="a">
             <li>Javascript</li>
             <li>React.js</li>
+            <li>Node.js</li>
             <li>WAMP Stack</li>
             <li>PHP, MySQL</li>
             <li>API integration</li>
@@ -100,8 +101,8 @@ class Main extends React.Component {
 
           <p>
             {" "}
-            Some of his work is in private repositories but source code can be
-            made available upon request.
+            {/* Some of his work is in private repositories but source code can be
+            made available upon request. */}
           </p>
 
           {close}

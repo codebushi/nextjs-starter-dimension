@@ -9,6 +9,7 @@ function Card() {
 
   return (
     <div className="Card-payments">
+      <p>Free Consultation, payment not necessary at this time, you may submit the form.</p>
       <Cards
         number={number}
         name={name}
